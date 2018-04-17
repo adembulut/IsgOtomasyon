@@ -2527,6 +2527,7 @@
     <Content Include="Views\Shared\_RaporLayout.cshtml" />
     <Content Include="Views\Uzman\SahaDenetimiRaporla.cshtml" />
     <Content Include="Views\Doktor\Asilar.cshtml" />
+    <Content Include="Views\Doktor\AsiDetay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

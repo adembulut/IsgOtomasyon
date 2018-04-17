@@ -380,7 +380,16 @@ namespace DKXISG.Controllers
             return hata("Aşı silinirken bir hata meydana geldi. Bu aşıyı yaptığınız birisi varsa silemezsiniz. Önce o kayıtların silinmesi gerekiyor");
         }
 
-
+        public ActionResult AsiDetay(int?id)
+        {
+            try
+            {
+                Asi asi = db.Asis.Find(id);
+                return View(asi);
+            }
+            catch { }
+            return RedirectToAction("Asilar");
+        }
 
 
 
