@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "DoktorEkle";
+}
+<br /><br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box yellow">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>Yeni Doktor Oluştur
+                </div>
+                <div class="tools">
+                    <a href="#" class="collapse"> </a>
+                    <a href="#" class="reload" onclick="location.reload()"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="#" method="post" id="yenidoktorform">
+
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">*Kullanıcı Adı</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Kullanıcı Adı" required maxlength="50" name="KullaniciAdi">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">*Parola</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" placeholder="Parola" required maxlength="50" name="Parola">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Telefon</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-phone"></i>
+                                        </span>
+                                        <input type="number" class="form-control" placeholder="Telefon Numarasu" required maxlength="50" name="Telefon">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">*Adı Soyadı</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Adı Soyadı" required maxlength="50" name="AdiSoyadi">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Diploma No</label>
+
+                                    <input type="number" class="form-control" placeholder="Diploma Numarası" name="DiplomaNo" maxlength="50">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                    <input type="email" class="form-control" placeholder="Email Adresi" required maxlength="50" name="Mail">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label">Adres</label>
+
+                            <textarea class="form-control" placeholder="Adres" maxlength="250" rows="3" name="Adres"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="form-actions">
+                        <div class="btn-set pull-left">
+                            <button type="button" class="btn green" id="yenidoktorkaydet">Kaydet</button>
+                            <button type="reset" class="btn blue">Temizle</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section footer{
+    <script>
+        $('#yenidoktorkaydet').click(function () {
+            $.ajax({
+                url: '/Yonetim/DoktorEkle',
+                type: 'POST',
+                data: $('#yenidoktorform').serialize(),
+                dataType: 'script'
+            });
+        });
+    </script>
+}

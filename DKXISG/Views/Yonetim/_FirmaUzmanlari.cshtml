@@ -1,0 +1,98 @@
+﻿@using DKXISG.Models
+@model IEnumerable<FirmaUzman>
+@{
+    Firma firma = ViewBag.firma;
+    List<Uzman> uzmanlar = ViewBag.uzmanlar;
+}
+<thead>
+    <tr>
+        <th> Adı Soyadı </th>
+        <th> Telefon</th>
+        <th> İşlemler </th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.Uzman.AktifMi == false)
+                {
+
+
+                    <span class="label label-warning" data-original-title="Pasif Kullanıcı" title="Pasif Kullanıcı"><span class="fa fa-ban"></span> @item.Uzman.AdiSoyadi</span>
+                }
+                else
+                {
+                    @item.Uzman.AdiSoyadi
+
+                }
+            </td>
+            <td>
+                @item.Uzman.Telefon
+
+            </td>
+            <td>
+
+                <button class="btn btn-danger btn-xs" id="btnFirmaUzmanEngelle" data-uzmanid="@item.UzmanID"> <span class="fa fa-ban"></span> Engelle</button>
+                <button class="btn btn-warning btn-xs"><span class="fa fa-list"></span> Yönet</button>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="2">
+            <select class="form-control" id="uzmanid" name="uzmanid" data-firmaid="@firma.Id">
+                @foreach (Uzman item in uzmanlar)
+                {
+                    FirmaUzman fu = Model.FirstOrDefault(x => x.UzmanID == item.Id);
+                    if (fu == null)
+                    {
+                        <option value="@item.Id"> @item.AdiSoyadi </option>
+                    }
+                }
+            </select>
+
+        </td>
+        <td>
+            <button class="btn btn-warning btn-xs" id="btnFirmaUzmanYetkilendir">
+                <span class="fa fa-plus"></span>
+                Yetkilendir
+            </button>
+        </td>
+    </tr>
+
+</tbody>
+
+<script>
+    $('#btnFirmaUzmanYetkilendir').click(function (e) {
+        var uzmanid = $('#uzmanid').val();
+        var firmaid = document.getElementById("uzmanid").dataset.firmaid;
+        $.ajax({
+            type: "POST",
+            url: "/Yonetim/FirmaUzmanYetkilendir",
+            data: { firmaid: firmaid, uzmanid: uzmanid },
+            success: function (response) {
+                if (response == 1) {
+                    firmaUzmanYenile();
+                }
+            }
+        });
+
+    });
+
+    $('#btnFirmaUzmanEngelle').click(function (e) {
+        var firmaid = document.getElementById("uzmanid").dataset.firmaid;
+        var uzmanid = this.dataset.uzmanid;
+        $.ajax({
+            type: "POST",
+            url: "/Yonetim/FirmaUzmanYetkiSil",
+            data: {firmaid:firmaid,uzmanid:uzmanid},
+            success: function (response) {
+                if (response == 1) {
+                    firmaUzmanYenile();
+                }
+            }
+        });
+
+    });
+</script>

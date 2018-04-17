@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "YoneticiEkle";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="portlet box blue-hoki">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>Yeni Yönetici Oluştur
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="javascript:;" class="reload"></a>
+        </div>
+    </div>
+
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form id="yoneticiform" method="post" class="form-horizontal">
+            @Html.AntiForgeryToken()
+            <div class="form-body">
+                <div class="form-actions top">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Kullanıcı Adı*</label>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="KullaniciAdi" id="KullaniciAdi" placeholder="Kullanıcı adını girin" maxlength="50" required>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Parola*</label>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="password" class="form-control" name="Parola" required maxlength="50" placeholder="Parola">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Adı Soyadı*</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="AdiSoyadi" maxlength="50" placeholder="Adı Soyadı" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Email</label>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control" name="Telefon" maxlength="50" placeholder="Email Adresi">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Telefon</label>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </span>
+                            <input type="number" class="form-control" name="Mail" maxlength="50" placeholder="Telefon Numarası">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Adres</label>
+                    <div class="col-md-6">
+                        <div class="input-icon">
+                            <i class="fa fa-home"></i>
+                            <textarea class="form-control" name="Adres" placeholder="Açık adresi yazın" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-actions top">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="button" class="btn green" id="Kaydet">Kaydet</button>
+                        <button type="reset" class="btn default">Temizle</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <!-- END FORM-->
+    </div>
+</div>
+
+@section footer{
+    <script>
+        $('.reload').click(function () {
+            document.getElementById("yoneticiEkle").reset();
+        });
+
+
+
+
+
+        $('#Kaydet').click(function () {
+            $.ajax({
+                url: '/Yonetim/YoneticiEkle',
+                type: 'POST',
+                data: $('#yoneticiform').serialize(),
+                success: function (result) {
+                    if (result == 1) {
+                        swal({
+                            title: "",
+                            text: "Yönetici başarıyla kaydedildi",
+                            type: "info",
+                            confirmButtonClass: "btn-default"
+                        },
+                        function () {
+                            location.href = "/Yonetim/Yoneticiler";
+
+                        });
+
+                    }
+                    else if (result == "2") {
+                        swal("Hata", "Bu kullanıcı adı zaten sistemde kayıtlı", "warning");
+
+                    } else if (result == "3") {
+                        swal("Hata", " \"*\" lı alanları doldurmanız gerekiyor", "warning");
+                    }
+                    else {
+                        swal("Hata", "Yönetici eklenirken bir hata meydana geldi", "warning");
+                    }
+
+
+
+                }
+            });
+        });
+
+    </script>
+}

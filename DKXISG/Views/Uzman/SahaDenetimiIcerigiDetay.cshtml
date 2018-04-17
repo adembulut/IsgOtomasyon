@@ -1,0 +1,192 @@
+﻿@using DKXISG.Models
+@model Item
+@{
+    ViewBag.Title = "SahaDenetimiIcerigiDetay";
+    Layout = "~/Views/Shared/_LayoutUzman.cshtml";
+}
+
+<h1 class="page-title">
+    @Model.SahaDenetim.Adi <small>@Model.TEDurum</small>
+</h1>
+<div class="row">
+    
+    <div class="col-md-12">
+        <!-- BEGIN PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-info font-dark"></i>
+                    <span class="caption-subject font-dark bold uppercase">Saha Denetimi İçerik Bilgisi</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="Tam Ekran"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <h4 class="block">Durumlar</h4>
+                <div class="alert alert-danger">
+                    <strong><span class="fa fa-warning"></span> Tehlike Durumu  : </strong> @Model.TEDurum
+                </div>
+
+                <div class="alert alert-info">
+                    <strong><span class="fa fa-exclamation-circle"></span> Riskler : </strong> @Model.Riskler
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong><span class="fa fa-check-square-o"></span> Düzenleyici ve önleyici faliyet : </strong> @Model.DOFaliyetler
+                </div>
+
+
+            </div>
+        </div>
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-info font-dark"></i>
+                    <span class="caption-subject font-dark bold uppercase">Sayısal Bilgiler</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <h4>Bazı değerler otomatik hesaplanmıştır</h4>
+                <div class="margin-top-10 margin-bottom-10 clearfix">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <td> Olasılık </td>
+                                <td>
+                                    @Model.Olasilik
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Şiddet
+                                </td>
+                                <td>
+                                    @Model.Siddet
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Risk
+                                </td>
+                                <td>
+                                    @Model.Risk
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Öncelik Sırası</td>
+                                <td>@Model.OncelikSirasi</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <span class="label label-danger"> Not! </span>
+                <span>  Bu bilgileri daha sonra değiştirebilirsiniz. </span>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="portlet light">
+    <div class="well"> <strong>Tehlike Sınıfı : </strong>  @Model.TehlikeSinifi </div>
+</div>
+<div class="well">
+    <a class="btn gray" href="/Uzman/SahaDenetimiIcerigi/@Model.SahaDenetim.Id">İçeriklere Dön</a>
+    <a class="btn red" style="float:right;" data-id="@Model.Id" id="btnIcerikSil" ><span clasS="fa fa-trash-o"></span> *İçeriği Sil</a>
+</div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light portlet-fit bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class=" icon-layers font-green"></i>
+                        <span class="caption-subject font-green bold uppercase">Resimler</span>&emsp;
+                        <a class="btn btn-circle" href="/Uzman/SahaDenetimiItemResim/@Model.Id"><span class="fa fa-plus"></span>Yeni Resim Ekle</a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="mt-element-card mt-element-overlay">
+                        <div class="row" id="item-resimler">
+                            @foreach (var item in Model.OlayYeriFotoes.ToList())
+                            {
+
+                                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="mt-card-item">
+                                        <div class="mt-card-avatar mt-overlay-1">
+                                            <img src="@Url.Content(item.ResimYolu)" class="img-rounded" />
+                                            <div class="mt-overlay">
+                                                <ul class="mt-info">
+                                                    <li>
+                                                        <a class="btn default btn-outline btnResimSil" data-resimid="@item.Id" href="javascript:;">
+                                                            <i class="icon-trash"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="btn default btn-outline btnResimGoster" data-resimyolu="@Url.Content(item.ResimYolu)" href="javascript:;">
+                                                            <i class="icon-eye"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:400px">
+        <div class="modal-content">
+            <div class="modal-body" style="padding:0;margin:0;">
+                <img src="//placehold.it/1000x600" id="img01" class="img-responsive">
+            </div>
+        </div>
+    </div>
+</div>
+@section footer{
+<script>
+    $("#btnIcerikSil").click(function (e) {
+        var id = this.dataset.id;
+        $.ajax({
+            type: "POST",
+            url: "/Uzman/SahaDenetimiIcerikSil",
+            data: { id: id},
+            dataType: "script"
+        });
+    });
+
+    $('#item-resimler').on('click', '.btnResimSil', function () {
+        var id = this.dataset.resimid;
+
+        $.ajax({
+            type: "POST",
+            url: "/Uzman/ItemResimSil",
+            data: { id: id },
+            dataType: "script"
+        });
+    });
+    $('#item-resimler').on('click', '.btnResimGoster', function () {
+        var resimyolu = this.dataset.resimyolu;
+        var img = '<img id="myImg" class="img-responsive" src="' + resimyolu + '" alt="Olay Yeri Foto" >';
+        $('#img01').attr("src", resimyolu);
+
+        function centerModal() {
+            $(this).css('display', 'block');
+            var $dialog = $(this).find(".modal-dialog");
+            var offset = ($(window).height() - $dialog.height()) / 2;
+            // Center modal vertically in window
+            $dialog.css("margin-top", offset);
+        }
+        $('#myModal').on('show.bs.modal', centerModal);
+        $(window).on("resize", function () {
+            $('.modal:visible').each(centerModal);
+        });
+
+        $('#myModal').modal("show");
+    });
+    </script>
+}

@@ -1,0 +1,86 @@
+﻿@using DKXISG.Models
+@model DoktorZiyaret
+@{
+    
+    ViewBag.Title = "Yeni Rapor";
+    Layout = "~/Views/Shared/_DoktorLayout.cshtml";
+}
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase">Rapor Oluştur </span><small>Hasta Bilgileri</small>
+                </div>
+                
+            </div>
+            <div class="portlet-body form">
+                <form role="form" id="frmRapor" method="post">
+                    <input hidden id="ZiyaretID" name="ZiyaretID" value="@Model.Id" />
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>Adı Soyadı*</label>
+                            <div class="input-icon">
+                                <i class="fa fa-bell-o font-green"></i>
+                                <input type="text" class="form-control" placeholder="Ad Soyad" name="HastaAdiSoyadi" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Tc Kimlik Numarası*</label>
+                            <div class="input-icon">
+                                <i class="fa fa-bell-o font-green"></i>
+                                <input type="number" class="form-control" placeholder="TC Kimlik Numarası" name="HastaTCNo" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon*</label>
+                            <div class="input-icon">
+                                <i class="fa fa-bell-o font-green"></i>
+                                <input type="number" class="form-control" placeholder="Telefon numarası" name="HastaTelefon" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Adres*</label>
+                            <div class="input-icon">
+                                <i class="fa fa-bell-o font-green"></i>
+                                <textarea type="text" class="form-control" placeholder="Adres" name="HastaAdres" rows="2" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Açıklama (Opsiyonel)</label>
+                            <div class="input-icon">
+                                <i class="fa fa-bell-o font-green"></i>
+                                <textarea type="text" class="form-control" placeholder="Açıklama" name="Aciklama" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="reset" class="btn default">Temizle</button> | 
+                        <button type="button" class="btn green" id="btnRaporKaydet">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section footer{
+
+    <script>
+        $('#btnRaporKaydet').click(function () {
+            $.ajax({
+                url: '/Doktor/RaporOlustur',
+                type: 'POST',
+                data: $('#frmRapor').serialize(),
+                dataType:'script'
+            });
+        });
+        
+    </script>
+
+}

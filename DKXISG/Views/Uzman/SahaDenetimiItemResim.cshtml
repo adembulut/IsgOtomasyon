@@ -1,0 +1,159 @@
+﻿@using DKXISG.Models
+@model Item
+@{
+    ViewBag.Title = "Saha Denetimi Olay Resimleri";
+    Layout = "~/Views/Shared/_LayoutUzman.cshtml";
+}
+@section header{
+    <style>
+        .resim-cerceve {
+            margin: 15px;
+        }
+    </style>
+    <link href="~/Content/OlayYeri.css" rel="stylesheet" />
+}
+<br /><br />
+<a class="btn blue" href="/Uzman/SahaDenetimiIcerigiDetay/@Model.Id#item-resimler"><span class="fa fa-backward"></span> Detay Sayfasına Dön</a>
+<a class="btn blue" href="/Uzman/SahaDenetimi/@Model.SahaDenetim.Id"><span class="fa fa-plus"></span> Yeni İçerik</a>
+
+<h1 class="page-title">
+    @Model.TEDurum | Resimleri
+    <small>Bu bölümde dilediğiniz kadar resim ekleyebilirsiniz</small>
+</h1>
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>Resim Ekle<small> 400x400 boyutunda görseller daha kaliteli görünebilir</small>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+            <a href="javascript:;" class="remove" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+
+        <!-- BEGIN FORM-->
+        <form action="/Uzman/ItemResimKaydet" method="post"
+              enctype="multipart/form-data" class="dropzone"
+              id="dropzoneForm">
+            <input hidden id="ItemID" name="ItemID" value="@Model.Id" />
+            <div class="fallback">
+                <input name="file" type="file" multiple />
+            </div>
+        </form>
+        <!-- END FORM-->
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light portlet-fit bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class=" icon-layers font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">Resimler</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="mt-element-card mt-element-overlay">
+                    <div class="row" id="item-resimler">
+                        @foreach (var item in Model.OlayYeriFotoes.ToList())
+                        {
+
+                            <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <div class="mt-card-item">
+                                    <div class="mt-card-avatar mt-overlay-1">
+                                        <img src="@Url.Content(item.ResimYolu)" class="img-rounded" />
+                                        <div class="mt-overlay">
+                                            <ul class="mt-info">
+                                                <li>
+                                                    <a class="btn default btn-outline btnResimSil" data-resimid="@item.Id" href="javascript:;">
+                                                        <i class="icon-trash"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="btn default btn-outline btnResimGoster" data-resimyolu="@Url.Content(item.ResimYolu)" href="javascript:;">
+                                                        <i class="icon-eye"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:400px">
+        <div class="modal-content">
+            <div class="modal-body" style="padding:0;margin:0;">
+                <img src="//placehold.it/1000x600" id="img01" class="img-responsive">
+            </div>
+        </div>
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript">
+        Dropzone.options.dropzoneForm = {
+            maxFilesize: 4,
+            acceptedFiles: 'image/*',
+            init: function () {
+
+                this.on("success", function (file, data) {
+                    //alert("tamam");
+                });
+                this.on("removedfile", function (file) {
+                    //alert("olmadı");
+                });
+                this.on("complete", function (data) {
+                    var res = eval('(' + data.xhr.responseText + ')');
+                    swal("Bilgi", res.Message, "success");
+                    var yeniResim = '<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12"><div class="mt-card-item"><div class="mt-card-avatar mt-overlay-1"><img src="' + res.ResimYolu + '" /><div class="mt-overlay"><ul class="mt-info"><li><a class="btn default btn-outline btnResimSil" data-resimid="' + res.ResimId + '" href="javascript:;"><i class="icon-trash"></i></a></li><li><a class="btn default btn-outline btnResimGoster" data-resimyolu="' + res.ResimYolu + '" href="javascript:;"><i class="icon-eye"></i> </a></li></ul></div></div></div></div>';
+
+                    $('#item-resimler').append(yeniResim);
+                    //alert(res.Message);
+                });
+            }
+        };
+        $(document).ready(function () {
+            $('#item-resimler').on('click', '.btnResimSil', function () {
+                var id = this.dataset.resimid;
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/Uzman/ItemResimSil",
+                    data: { id: id },
+                    dataType: "script"
+                });
+            });
+
+            $('#item-resimler').on('click', '.btnResimGoster', function () {
+                var resimyolu = this.dataset.resimyolu;
+                var img = '<img id="myImg" class="img-responsive" src="' + resimyolu + '" alt="Olay Yeri Foto" >';
+                $('#img01').attr("src", resimyolu);
+
+                function centerModal() {
+                    $(this).css('display', 'block');
+                    var $dialog = $(this).find(".modal-dialog");
+                    var offset = ($(window).height() - $dialog.height()) / 2;
+                    // Center modal vertically in window
+                    $dialog.css("margin-top", offset);
+                }
+                $('#myModal').on('show.bs.modal', centerModal);
+                $(window).on("resize", function () {
+                    $('.modal:visible').each(centerModal);
+                });
+
+                $('#myModal').modal("show");
+            });
+
+        });
+
+    </script>
+}

@@ -1,0 +1,44 @@
+﻿@using DKXISG.Models
+@model FirmaYapilacak
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title">@Model.Firma.Adi</h4>
+        </div>
+        <div class="modal-body">
+            <b>Tipi : </b><h4>@Model.Tipi</h4>
+            <b>Oluşturulma Tarihi : </b><h5>@Model.Tarih.ToString()</h5>
+            @if (Model.isTamam == true)
+            {
+                <b>Tamamlanma Tarihi : </b><h5>@Model.okTarih.ToString()</h5>
+
+            }
+            <p>@Model.Aciklama</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn dark btn-outline" data-dismiss="modal">Kapat</button>
+            @if (Model.isTamam == false)
+            {
+                <button type="button" class="btn dark btn-outline" data-id="@Model.Id" id="btnYapilacakTamamlandi">Tamamlandı</button>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#btnYapilacakTamamlandi').click(function () {
+        var id = this.dataset.id;
+        $.ajax({
+            url: '/Uzman/YapilacakTamamlandi',
+            type: 'POST',
+            data: { id: id },
+            success: function (result) {
+                if (result == "1") {
+                    $('#mdlYapilacakDetay').modal("hide");
+                    swal({ title: 'Bilgi', text: 'Hatırlatma yapıldı olarak kaydedildi', type: 'success', confirmButtonClass: 'btn-default' }, function () { location.reload();});
+                }
+            }
+        })
+    });
+</script>

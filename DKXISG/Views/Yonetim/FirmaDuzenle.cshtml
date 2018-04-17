@@ -1,0 +1,323 @@
+﻿@using DKXISG.Models
+@model Firma
+@{
+    ViewBag.Title = "FirmaDuzenle";
+    List<Musteri> musteriler = ViewBag.musteriler;
+    IEnumerable<Sektor> sektorler = ViewBag.sektorler;
+    List<Il> iller = ViewBag.iller;
+}
+@section header{
+    <link href="~/Content/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+    <style>
+        .select2 {
+            width: 100% !important;
+        }
+
+        .input-medium {
+            width: 100% !important;
+        }
+    </style>
+
+}
+<br />
+<br />
+
+
+
+<div class="portlet box blue-hoki">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>@Model.Adi - Firma Düzenle
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="javascript:;" class="reload"></a>
+        </div>
+    </div>
+
+    <div class="portlet-body form">
+
+        <form action="#" method="POST" id="frmFirmaDuzenle" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input hidden id="Id" name="Id" value="@Model.Id" />
+            <div class="form-horizontal">
+                <!--<h4>Firma</h4>-->
+                <hr />
+                @Html.ValidationSummary(true)
+                <div class="form-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adi, "*Firma Adı", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            <label>Firma ismini düzenleyemezsiniz</label>
+                            <input class="form-control" type="text" value="@Model.Adi" disabled readonly="" />
+                            @Html.ValidationMessageFor(model => model.Adi)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SektorId, "*Sektör", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-8">
+                            <select class="form-control" id="SektorId" name="SektorId" required>
+                                @foreach (var item in sektorler)
+                                {
+                                    if (item.Id == Model.SektorId)
+                                    {
+                                        <option selected value="@item.Id">@item.Adi</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.Adi</option>
+                                    }
+
+                                }
+                            </select>
+
+                            @Html.ValidationMessageFor(model => model.SektorId)
+                        </div>
+                        <div class="col-md-2 pull-right">
+                            <a class=" btn btn-gray" href="/Yonetim/Sektorler">+ Yeni</a>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MusteriID, "*Müşteri", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-8">
+                            <select class="form-control" name="MusteriID" id="MusteriID" required>
+                                @foreach (var item in musteriler)
+                                {
+                                    if (item.Id == Model.MusteriID)
+                                    {
+                                        <option selected value="@item.Id">@item.AdiSoyadi - @item.KullaniciAdi</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.AdiSoyadi - @item.KullaniciAdi</option>
+                                    }
+
+                                }
+                            </select>
+
+
+
+                            @Html.ValidationMessageFor(model => model.MusteriID)
+                        </div>
+                        <div class="col-md-2 pull-right">
+                            <a class=" btn btn-gray" href="/Yonetim/MusteriEkle">+ Yeni</a>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Calışan Sayısı</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="number" min="1" id="CalisanSayisi" name="CalisanSayisi" required value="@Model.CalisanSayisi" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Web Adresi</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="url" id="Web" name="Web" value="@Model.Web" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Mail Adresi</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="email" id="Mail" name="Mail" value="@Model.Mail" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Tehlike Sınıfı</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" id="Sinifi" name="Sinifi" placeholder="(Örneğin: A Sınıfı)" value="@Model.Sinifi" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">İl</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="IlId" name="IlId">
+                                <option disabled selected>Şehir Seç</option>
+                                @foreach (var item in iller)
+                                {
+                                    if (item.Id == Model.Ilce.Il.Id)
+                                    {
+                                        <option selected value="@item.Id">@item.Adi</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.Adi</option>
+
+                                    }
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">İl</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="IlceID" name="IlceID">
+                                @if (Model.Ilce != null)
+                                {
+                                    <option value="@Model.Ilce.Id">@Model.Ilce.IlceAdi</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Adres", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" id="Adresi" name="Adresi" value="@Model.Adresi" />
+                            @Html.ValidationMessageFor(model => model.Adresi)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Telefon", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" id="Telefonu" name="Telefonu" value="@Model.Telefonu" />
+                            @Html.ValidationMessageFor(model => model.Telefonu)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Vergi Dairesi", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" id="VergiDairesi" name="VergiDairesi" value="@Model.VergiDairesi" />
+                            @Html.ValidationMessageFor(model => model.VergiDairesi)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Vergi Numarası", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" id="VergiNumarasi" name="VergiNumarasi" value="@Model.VergiNumarasi" />
+                            @Html.ValidationMessageFor(model => model.VergiNumarasi)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Harita Enlem Boylam", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" id="LatLng" name="LatLng" value="@Model.LatLng" placeholder="Örneğin(39.750489, 37.014970)" />
+                            @Html.ValidationMessageFor(model => model.LatLng)
+                        </div>
+                    </div>
+                    @if (!String.IsNullOrEmpty(Model.ResimYolu))
+                    {
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">
+                                Varolan Firma Resmi
+                            </label>
+                            <div class="col-md-9">
+                                <img class="img-circle" src="@Url.Content(Model.ResimYolu)" width="120" height="120" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-md-2 control-label">
+                                Değiştirmek istemiyorsanız boş bırakın.
+                            </label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="file" name="ResimYolu" id="ResimYolu" />
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+
+                            <label class="col-md-2 control-label">
+                                Firma Resmi
+                            </label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="file" name="ResimYolu" id="ResimYolu" />
+                            </div>
+                        </div>
+                    }
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="reset" class="btn btn-primary">Temizle</button> |
+                            <button type="button" class="btn btn-default" id="btnFirmaDuzenleKaydet">Kaydet</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
+
+        <div>
+            @Html.ActionLink("Firma Listesine Dön", "/Firmalar", null, new { @class = "btn btn-primary" })
+        </div>
+        <br /><br />
+    </div>
+</div>
+
+
+@section footer{
+
+
+    <script src="~/Content/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#IlId').select2();
+            $('#IlceID').select2();
+        });
+        $('#IlId').change(function () {
+            var id = $('#IlId').val();
+            $.ajax({
+                url: '/Yonetim/IlceleriGetir',
+                type: 'POST',
+                data: { id: id },
+                success: function (result) {
+                    $('#IlceID').html(result);
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            $("#btnFirmaDuzenleKaydet").click(function (event) {
+                event.preventDefault();
+                var form = $('#frmFirmaDuzenle')[0];
+                var data = new FormData(form);
+                data.append("ResimYolu",$('#ResimYolu').val());
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "/Yonetim/FirmaDuzenle",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000
+                });
+
+            });
+
+        });
+
+
+        //$('#btnFirmaDuzenleKaydet').click(function () {
+        //    $.ajax({
+        //        url: '/Yonetim/FirmaDuzenle',
+        //        type: 'POST',
+        //        data: $('#frmFirmaDuzenle').serialize(),
+        //        dataType: 'script'
+        //    });
+        //});
+    </script>
+
+}

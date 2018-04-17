@@ -1,0 +1,66 @@
+﻿@using DKXISG.Models
+@model SahaDenetim
+@{
+    ViewBag.Title = "SahaDenetimiSil";
+    Layout = "~/Views/Shared/_LayoutUzman.cshtml";
+}
+
+<h1 class="page-title">
+    @Model.Adi.ToUpper() | Silmek için onaylayın
+</h1>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase">Bilgilerinizi doğrulayın</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">
+                            <strong>Saha denetimi tüm içerikleriyle birlikte silinecektir. Bu işlem geri alınamaz. Eğer ne yaptığınızdan emin değilseniz geri dönebilirsiniz.</strong>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Parolanız : </label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="password" id="Parola" name="Parola" />
+                        </div>
+                    </div>
+                   
+                </form>
+                
+            </div>
+        </div>
+    </div>
+    <div class="well">
+        <a class="btn blue" href="/Uzman/SahaDenetimiIcerigi/@Model.Id"><span class="fa fa-backward"></span> Saha Denetimleri</a>
+        <a class="btn red" style="float:right;" href="javascript:;" id="btnSahaDenetimiSil" data-id="@Model.Id"><span class="fa fa-trash-o"></span> *Onaylıyorum</a>
+    </div>
+</div>
+
+
+@section footer{
+<script>
+    $(document).ready(function () {
+        $("#btnSahaDenetimiSil").click(function (e) {
+            var id = this.dataset.id;
+            var parola = $('#Parola').val();
+            if (parola.length < 1) {
+                swal("Gerçekten siz olduğunuzu onaylayabilmemiz için parolanıza ihtiyacımız var");
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Uzman/SahaDenetimiSil",
+                    data: {id:id,parola:parola},
+                    dataType: "script"
+                });
+            }
+
+        });
+    });
+    </script>
+}

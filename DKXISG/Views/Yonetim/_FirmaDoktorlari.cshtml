@@ -1,0 +1,89 @@
+﻿@using DKXISG.Models
+@model IEnumerable<FirmaDoktor>
+@{
+    List<Doktor> doktorlar = ViewBag.doktorlar;
+    Firma firma = ViewBag.firma;
+}
+<thead>
+    <tr>
+        <th> Adı Soyadı </th>
+        <th> Telefon</th>
+        <th> İşlemler </th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td> @item.Doktor.AdiSoyadi </td>
+            <td> @item.Doktor.Telefon </td>
+            <td>
+                <button class="btn btn-danger btn-xs" id="btnFirmaDoktorEngelle" data-doktorid="@item.DoktorID">
+                    <span class="fa fa-ban"></span> Engelle
+                </button>
+                <a class="btn btn-primary btn-xs" href="/Yonetim/FirmaDoktorYonet/@item.Id">
+                    <span class="fa fa-bar-chart"></span>
+                    Yönet
+                </a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="2">
+            <select class="form-control" id="doktorid" name="doktorid" data-firmaid="@firma.Id">
+                @foreach (Doktor item in doktorlar)
+                {
+                    FirmaDoktor fd = Model.FirstOrDefault(x => x.DoktorID == item.Id && x.FirmaID == firma.Id);
+                    if (fd == null)
+                    {
+                        <option value="@item.Id">@item.AdiSoyadi </option>
+                    }
+                }
+            </select>
+
+        </td>
+        <td>
+            <button class="btn btn-warning btn-xs" id="btnFirmaDoktorYetkilendir">
+                <span class="fa fa-plus"></span>
+                Yetkilendir
+            </button>
+        </td>
+    </tr>
+</tbody>
+
+
+    <script>
+        $('#btnFirmaDoktorYetkilendir').click(function (e) {
+            var doktorid = $('#doktorid').val();
+            var firmaid = document.getElementById("doktorid").dataset.firmaid;
+            $.ajax({
+                type: "POST",
+                url: "/Yonetim/FirmaDoktorYetkilendir",
+                data: {firmaid:firmaid,doktorid:doktorid},
+                success: function (response) {
+                    if (response == 1) {
+                        firmaDoktorYenile();
+                    }
+                }
+            });
+
+        });
+        $('#btnFirmaDoktorEngelle').click(function () {
+            var doktorid = this.dataset.doktorid;
+            var firmaid = document.getElementById("doktorid").dataset.firmaid;
+
+            $.ajax({
+                type: "POST",
+                url: "/Yonetim/FirmaDoktorYetkiyiSil",
+                data: {firmaid:firmaid,doktorid:doktorid},
+                dataType: "json",
+                success: function (response) {
+                    if (response == 1) {
+                        firmaDoktorYenile();
+                    }
+                }
+            });
+        });
+
+    </script>
+

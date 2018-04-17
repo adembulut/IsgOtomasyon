@@ -1,0 +1,75 @@
+﻿@using DKXISG.Models
+@model IEnumerable<Firma>
+@{
+    ViewBag.Title = "Ziyaret Olustur";
+    Layout = "~/Views/Shared/_DoktorLayout.cshtml";
+}
+<h1 class="page-title">Ziyaret Oluştur</h1>
+<div class="row">
+
+    <div class="portlet box red">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>Yeni bir ziyaret oluşturun
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="#" id="frmZiyaretOlustur">
+
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label">Firma Seçin*</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-briefcase"></i>
+                            </span>
+                            <select class="form-control" id="FirmaID" name="FirmaID">
+                                @foreach (var item in Model)
+                                {
+                                    <option value="@item.Id">@item.Adi</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group last">
+                        <label class="control-label">Açıklama(Opsiyonel)</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-file-text-o"></i>
+                            </span>
+                            <input type="email" class="form-control" id="Aciklama" name="Aciklama" placeholder="Açıklama Yazın">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn green" id="btnZiyaretKaydet">Kaydet</button>
+                    <button type="reset" class="btn default">Temizle</button>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+</div>
+
+@section footer{
+    <script>
+
+
+
+        $("#btnZiyaretKaydet").click(function (e) {
+            $.ajax({
+                url: '/Doktor/ZiyaretOlustur',
+                type: 'POST',
+                data: $('#frmZiyaretOlustur').serialize(),
+                dataType:'script'
+            });
+
+        });
+    </script>
+}

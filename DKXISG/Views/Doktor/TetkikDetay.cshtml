@@ -1,0 +1,36 @@
+﻿@using DKXISG.Models
+@model SaglikRaporuTetkik
+@{
+    ViewBag.Title = "Tetkik Detay";
+    Layout = "~/Views/Shared/_DoktorLayout.cshtml";
+}
+
+<h1 class="page-title">
+    @Model.SaglikRaporu.HastaAdiSoyadi
+    <small>Tetkik Detay</small>
+</h1>
+<div class="row">
+    <div class="portlet light bordered">
+        <div class="portlet-body">
+            <h5><b>Hasta Adı : </b>@Model.SaglikRaporu.HastaAdiSoyadi.ToUpper()</h5>
+            <h5><b>Rapor Tarihi :</b> @Model.SaglikRaporu.Tarih.ToString()</h5>
+            
+
+            <h5><b>Tarih :</b> @Model.Tarih.ToString()</h5>
+            <br />
+        </div>
+    </div>
+    <div class="m-heading-1 border-red m-bordered">
+        <b>Tetkik : </b>
+        <p>@Model.Tetkik</p>
+    </div>
+    <div class="m-heading-1 border-green m-bordered">
+        <b>Sonuç : </b>
+        <p>
+            @Model.Sonuc
+        </p>
+    </div>
+</div><br />
+<div class="note note-info">
+   <a class="btn btn-primary btn-sm" href="/Doktor/RaporIcerik/@Model.SaglikRaporuID"><span class="fa fa-backward"></span> Rapor İçeriğine Dön</a>
+</div>

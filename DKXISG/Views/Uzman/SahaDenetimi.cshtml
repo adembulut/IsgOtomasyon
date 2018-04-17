@@ -1,0 +1,201 @@
+﻿@using DKXISG.Models
+@model SahaDenetim
+@{
+    ViewBag.Title = "SahaDenetimi";
+    Layout = "~/Views/Shared/_LayoutUzman.cshtml";
+    IEnumerable<Item> itemler = ViewBag.itemler;
+}
+@section header{
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="~/Content/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="~/Content/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+}
+<h1 class="page-title">
+    Saha Denetimi İçeriği
+    <small>Bu bölümde itemleri girebilirsiniz</small>
+</h1>
+
+<div class="well"> <a class="btn gray" href="/Uzman/SahaDenetimiIcerigi/@Model.Id"><span class="fa fa-backward"></span> İçeriklere Dön</a></div>
+
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>Denetim Raporu İçeriği Oluştur
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
+            <a href="javascript:;" class="remove" data-original-title="" title=""> </a>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form id="frmDenetimItem" action="#" class="form-horizontal form-row-seperated" method="post">
+            <input hidden id="SDID" name="SDID" value="@Model.Id" />
+            <div class="form-body">
+                <div class="form-group" style="background-color:#e5e5e5;">
+                    <label class="control-label col-md-3">Taslak Seçebilirsiniz</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="Itemler" id="Itemler">
+                            <option disabled selected>Taslak Seçin</option>
+                            @if (itemler.ToList().Count > 0)
+                            {
+                                foreach (var item in itemler)
+                                {
+                                    <option value="@item.Id">@item.TEDurum</option>
+                                }
+                            }
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Tehlike</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" rows="2" name="TEDurum" id="TEDurum" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Riskler</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" rows="2" name="Riskler" id="Riskler" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Düzenleyici ve Önleyici Faliyetler</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" rows="2" name="DOFaliyetler" id="DOFaliyetler" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Tehlike Sınıfı</label>
+                    <div class="col-md-9">
+                        <select class="bs-select form-control" data-show-subtext="true" id="TehlikeSinifi" name="TehlikeSinifi">
+                            <option data-icon="fa-info icon-info" value="Az Tehlikeli">Az Tehlikeli</option>
+                            <option data-icon="fa-exclamation icon-warning" value="Tehlikeli">Tehlikeli</option>
+                            <option data-icon="fa-warning icon-danger" value="Çok Tehlikeli">Çok Tehlikeli</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Risk Oranı</label>
+
+                    <div class="col-md-9">
+                        <div class="col-md-4">
+                            <label class="col-md-3">
+                                Olasılık
+                            </label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="number" min="1" id="Olasilik" name="Olasilik" value="1" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-md-3">
+                                Şiddet
+                            </label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="number" min="1" id="Siddet" name="Siddet" value="1" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="col-md-3">
+                                Öncelik
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="OncelikSirasi" name="OncelikSirasi">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Termin Tarihi</label>
+                    <div class="col-md-9">
+                        <input type="text" id="TerminTarihi" name="TerminTarihi" class="form-control" readonly data-date-format="dd/mm/yyyy" data-date-start-date="+0d">
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="button" class="btn btn-primary" id="btnSahaDenetimiItemKaydet">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- END FORM-->
+    </div>
+</div>
+
+@section footer{
+    <script src="~/Content/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#Itemler').select2();
+            $('#TerminTarihi').datepicker({});
+
+
+
+
+            $('#btnSahaDenetimiItemKaydet').click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/Uzman/SahaDenetimiItemKaydet",
+                    data: $('#frmDenetimItem').serialize(),
+                    dataType: "script"
+                });
+            });
+
+
+
+            $('#Itemler').change(function () {
+                var id = $('#Itemler').val();
+                $.ajax({
+                    type: 'POST',
+                    url: "/Uzman/ItemGetir",
+                    data: { id: id },
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#TehlikeSinifi').val(result.TehlikeSinifi);
+                        $('#TEDurum').val(result.TEDurum);
+                        $('#Riskler').val(result.Riskler);
+                        $('#Olasilik').val(result.Olasilik);
+                        $('#Siddet').val(result.Siddet);
+                        $('#OncelikSirasi').val(result.OncelikSirasi);
+                        $('#DOFaliyetler').val(result.DOFaliyetler);
+                    }
+                })
+            });
+
+
+
+        });
+
+
+    </script>
+}

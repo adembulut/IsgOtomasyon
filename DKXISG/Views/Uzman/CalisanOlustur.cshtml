@@ -1,0 +1,387 @@
+﻿@using DKXISG.Models
+@model IEnumerable<Firma>
+@{
+    ViewBag.Title = "CalisanOlustur";
+    Layout = "~/Views/Shared/_LayoutUzman.cshtml";
+}
+
+@section header{
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+<link href="~/Content/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/assets/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+<link href="~/Content/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL PLUGINS -->
+    <style>
+        .select2{
+            width:100% !important;
+        }
+        .input-medium {
+     width: 100% !important; 
+}
+    </style>
+}
+
+<br />
+<div class="row">
+    <div class="col-md-12">
+    
+        <div class="portlet light bordered" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class=" icon-layers font-red"></i>
+                    <span class="caption-subject font-red bold uppercase">
+                        Personel Ekle -
+                        <span class="step-title"> Toplam 4 formdan 1.</span>
+                    </span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                        <i class="icon-cloud-upload"></i>
+                    </a>
+                    <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                        <i class="icon-wrench"></i>
+                    </a>
+                    <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                        <i class="icon-trash"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form class="form-horizontal" id="submit_form" method="POST">
+                    <div class="form-wizard">
+                        <div class="form-body">
+                            <ul class="nav nav-pills nav-justified steps">
+                                <li>
+                                    <a href="#tab1" data-toggle="tab" class="step">
+                                        <span class="number"> 1 </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> Firma Seçin
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab2" data-toggle="tab" class="step">
+                                        <span class="number"> 2 </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> Bölüm Seçin
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab3" data-toggle="tab" class="step active">
+                                        <span class="number"> 3 </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> Personel Bilgileri
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab4" data-toggle="tab" class="step">
+                                        <span class="number"> 4 </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> Onayla
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div id="bar" class="progress progress-striped" role="progressbar">
+                                <div class="progress-bar progress-bar-success"> </div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="alert alert-danger display-none">
+                                    <button class="close" data-dismiss="alert"></button> Hatalı yerleri düzeltmelisiniz!
+                                </div>
+                                <div class="alert alert-success display-none">
+                                    <button class="close" data-dismiss="alert"></button> Herşey yolunda görünüyor.
+                                </div>
+                                <div class="tab-pane active" id="tab1">
+                                    <h3 class="block">Aşağıdaki listeden personelin çalıştığı firmayı seçin</h3>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Firma
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" id="FirmaID" name="FirmaID" required>
+                                                <option disabled selected>Firma Seçin</option>
+                                                @foreach (var item in Model)
+                                                {
+                                                    <option value="@item.Id">@item.Adi.ToUpper()</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                    <h3 class="block">Personelin Çalıştığı Bölümü Seçin</h3>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Bölüm
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" id="IsyeriBolumID" name="IsyeriBolumID" required></select>
+                                        </div>
+
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Bölüm Ekle
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input class="form-control" id="YeniBolum" name="YeniBolum" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" id="btnBolumEkle" class="btn blue btn-sm"><span class="icon icon-plus"></span> Bölüm Ekle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab3">
+                                    <h3 class="block">Personel Bilgilerini Girin</h3>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Adı Soyadı
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="AdiSoyadi" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Görevi
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="Gorevi" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Doğum Tarihi
+                                            <span class="required">* </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input class="form-control form-control-inline input-medium date-picker" size="16" type="text" value="" readonly="" required name="DogumTarihi" id="DogumTarihi">
+                                          
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Tc Kimlik No
+                                            <span class="required"> </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="TcKimlikNo" id="TcKimlikNo" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Medeni Hali
+                                            <span class="required"> </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select type="text" class="form-control" name="MedeniHali" id="MedeniHali">
+                                                <option value="Belirtilmedi">Belirtilmedi</option>
+                                                <option value="Bekar">Bekar</option>
+                                                <option value="Evli">Evli</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Cinsiyet
+                                            <span class="required"> </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select type="text" class="form-control" name="Cinsiyet" id="Cinsiyet">
+                                                <option value="Belirtilmedi">Belirtilmedi</option>
+                                                <option value="Erkek">Erkek</option>
+                                                <option value="Bayan">Bayan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Telefon
+                                            <span class="required">  </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="Telefon" id="Telefon" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Email
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="email" class="form-control" name="Email" id="Email" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Eğitim Durumu
+                                            <span class="required"> </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="EgitimDurumu" id="EgitimDurumu" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Kan Grubu
+                                            <span class="required"> </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="KanGrubu" id="KanGrubu" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            İşe Giriş Tarihi
+                                            <span class="required"> </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input class="form-control form-control-inline input-medium date-picker" size="16" type="text" value="" readonly="" name="IseGirisTarihi" id="IseGirisTarihi">
+                                          
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">
+                                            Hala Çalışıyor Mu
+                                            <span class="required"> </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select type="text" class="form-control" name="HalaCalisiyorMu" id="HalaCalisiyorMu">
+                                                <option value="Belirtilmedi">Belirtilmedi</option>
+                                                <option value="true">Evet</option>
+                                                <option value="false">Hayır</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab4">
+                                    <h3 class="block">Personeli kaydetmek istediğinize emin misiniz?</h3><br />
+                                    <hr />
+                                    <button type="button" class="btn green" id="btnCalisanKaydet" style="float:right;">
+                                        Kaydet
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <a href="javascript:;" class="btn default button-previous">
+                                        <i class="fa fa-angle-left"></i> Geri
+                                    </a>
+                                    <a href="javascript:;" class="btn btn-outline green button-next">
+                                        Devam Et
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section footer{
+ <!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="~/Content/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+<script src="~/Content/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="~/Content/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+<script src="~/Content/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js" type="text/javascript"></script>
+<script src="~/Content/assets/pages/scripts/form-wizard.js" type="text/javascript"></script>
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="~/Content/assets/global/plugins/moment.min.js" type="text/javascript"></script>
+<script src="~/Content/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+<script src="~/Content/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="~/Content/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+<script src="~/Content/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="~/Content/assets/global/plugins/clockface/js/clockface.js" type="text/javascript"></script>
+<script src="~/Content/assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+
+
+
+    <script>
+        jQuery.extend(jQuery.validator.messages, {
+            required: "Bu alan gereklidir."
+        });
+
+        function bolumdoldur(id) {
+            $.ajax({
+                url: '/Uzman/BolumGetir',
+                type: 'POST',
+                data: { id: id },
+                success: function (result) {
+                    $('#IsyeriBolumID').html(result);
+                }
+            });
+        }
+        $('#FirmaID').change(function () {
+            var id = $('#FirmaID').val();
+            bolumdoldur(id);
+        });
+
+        
+        $('#btnBolumEkle').click(function () {
+            var bolumadi = $('#YeniBolum').val();
+            if (bolumadi.length > 0) {
+                var isyeriid = $('#IsyeriBolumID');
+                var firmaid = $('#FirmaID').val();
+                $.ajax({
+                    url: '/Uzman/FirmaBolumEkleVeGetir',
+                    type: 'POST',
+                    data: { firmaid: firmaid, bolumadi: bolumadi },
+                    success: function (result) {
+                        $(isyeriid).html(result);
+                        swal('Başarılı', "Bölüm başarıyla eklendi.Şimdi bölümü seçebilirsiniz", "success");
+                    }
+                });
+            } else {
+                swal('Hata', 'Bir bölüm adı girmelisiniz', 'warning');
+            }
+        });
+
+
+
+        $(document).ready(function () {
+            $('#IsyeriBolumID').select2();
+            $('#FirmaID').select2();
+            $('#btnCalisanKaydet').click(function () {
+                $.ajax({
+                    url: '/Uzman/CalisanOlustur',
+                    type: 'POST',
+                    data: $('#submit_form').serialize(),
+                    datatype: 'script'
+                });
+            });
+        });
+
+        
+    </script>
+}
