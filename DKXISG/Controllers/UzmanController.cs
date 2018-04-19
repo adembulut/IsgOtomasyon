@@ -20,6 +20,10 @@ namespace DKXISG.Controllers
             return View();
         }
 
+
+
+        /*
+
         public ActionResult CalisanOlustur()
         {
             List<Firma> firmalar = new List<Firma>();
@@ -85,6 +89,12 @@ namespace DKXISG.Controllers
             catch { }
             return "";
         }
+
+        */
+
+
+
+
         public ActionResult Firmalar()
         {
             List<FirmaUzman> fu = db.FirmaUzmen.Where(x => x.UzmanID == benuzman.Id).ToList();
@@ -480,12 +490,6 @@ namespace DKXISG.Controllers
             catch { }
             return hata("İçerik silinirken bir hata meydana geldi. Lütfen yetkinizi kontrol edip tekrar deneyin");
         }
-
-        
-      
-
-
-
 
 
 

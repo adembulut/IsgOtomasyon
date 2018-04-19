@@ -113,8 +113,7 @@
                             <th> Aşı Tarihi </th>
                             <th> Doktor </th>
                             <th> Açıklama</th>
-
-                            <th> İşlem </th>
+                            <th>Tekrar Tarihi</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -124,8 +123,7 @@
                             <th> Aşı Tarihi </th>
                             <th> Doktor </th>
                             <th> Açıklama</th>
-
-                            <th> İşlem </th>
+                            <th>Tekrar Tarihi</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -136,23 +134,27 @@
                                 <td>@item.Calisan.AdiSoyadi.ToUpper()</td>
                                 <td>@item.AsiTarihi.ToShortDateString()</td>
                                 <td>@item.Doktor.AdiSoyadi.ToUpper()</td>
-                                <td>@item.Aciklama</td>
                                 <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                            İşlemler
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu pull-left" role="menu">
-                                            <li>
-                                                <a class="btnAsiDuzenle" href="javascript:;">
-                                                    <i class="icon-pencil"></i> Detay
-                                                </a>
-                                            </li>
+                                    @if (!String.IsNullOrEmpty(item.Aciklama))
+                                    {
+                                        <a class="btn yellow btn-xs btnAciklamaGoster" data-aciklama="@item.Aciklama" data-adi="@item.Calisan.AdiSoyadi"><span class="fa fa-eye"></span> Göster</a>
+                                    }
+                                    else
+                                    {
+                                        <text>Açıklama Yok</text>
+                                    }
+                                
+                            </td>
 
-                                        </ul>
-                                    </div>
-                                </td>
+                                <td>
+                                    @item.AsiTarihi.AddDays(item.Asi.IslemPeriyodu).ToShortDateString()
+                                    @{
+                                       var bugun = DateTime.Now;
+                                       var kalan =  ((item.AsiTarihi.Date.AddDays(item.Asi.IslemPeriyodu))-bugun.Date).TotalDays;
+                                       <text> (@kalan.ToString() gün sonra)</text>
+                                    }
+                            </td>
+                                
                             </tr>
                         }
 
@@ -206,7 +208,22 @@
     </div>
 </div>
 
+<div class="modal fade" id="mdlAciklamaDetay" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="txtCalisanAdi"></h4>
+            </div>
+            <div class="modal-body" id="txtAciklama">
 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section footer{
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <script src="~/Content/assets/global/scripts/datatable.js" type="text/javascript"></script>
@@ -252,6 +269,11 @@
                 data: $('#frmAsiKaydiOlustur').serialize(),
                 dataType: "script"
             });
+        });
+        $('.btnAciklamaGoster').click(function () {
+            $('#txtAciklama').text(this.dataset.aciklama);
+            $('#txtCalisanAdi').text(this.dataset.adi);
+            $('#mdlAciklamaDetay').modal("show");
         });
 
 

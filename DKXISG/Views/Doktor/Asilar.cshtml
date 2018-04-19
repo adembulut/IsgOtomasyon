@@ -85,13 +85,13 @@
                                         <ul class="dropdown-menu pull-left" role="menu">
                                             <li>
                                                 <a class="btnAsiKaydiOlustur" data-id="@item.Id" href="javascript:;">
-                                                    <i class="icon-user"></i> Aşı kaydı oluştur
+                                                    <i class="icon-user-follow"></i> Aşı kaydı oluştur
                                                 </a>
                                             </li>
                                             <li class="divider"> </li>
                                             <li>
                                                 <a class="btnAsiDetay" data-id="@item.Id" href="/Doktor/AsiDetay/@item.Id">
-                                                    <i class="icon-tag"></i> Aşı Detayı
+                                                    <i class="icon-users"></i> Yapılanlar
                                                 </a>
                                             </li>
                                             <li>
@@ -106,6 +106,7 @@
                                                     <i class="icon-pencil"></i> Düzenle
                                                 </a>
                                             </li>
+                                            <li class="divider"> </li>
                                             @if (item.CalisanAsis.ToList().Count == 0)
                                             {
                                                 <li>
@@ -114,14 +115,6 @@
                                                     </a>
                                                 </li>
                                             }
-
-                                            <li class="divider"> </li>
-                                            <li>
-                                                <a href="javacsript:;">
-                                                    <i class="icon-flag"></i> Yapılanlar
-                                                    <span class="badge badge-success">@item.CalisanAsis.ToList().Count</span>
-                                                </a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </td>

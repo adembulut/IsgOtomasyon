@@ -2512,7 +2512,6 @@
     <Content Include="Views\Doktor\Raporlarim.cshtml" />
     <Content Include="Views\Doktor\RaporDetay.cshtml" />
     <Content Include="Views\Shared\_LayoutUzman.cshtml" />
-    <Content Include="Views\Uzman\CalisanOlustur.cshtml" />
     <Content Include="Views\Uzman\Index.cshtml" />
     <Content Include="Views\Uzman\Firmalar.cshtml" />
     <Content Include="Views\Uzman\FirmaDetay.cshtml" />
@@ -2528,6 +2527,7 @@
     <Content Include="Views\Uzman\SahaDenetimiRaporla.cshtml" />
     <Content Include="Views\Doktor\Asilar.cshtml" />
     <Content Include="Views\Doktor\AsiDetay.cshtml" />
+    <Content Include="Views\Yonetim\CalisanOlustur.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1049,6 +1049,69 @@ namespace DKXISG.Controllers
         }
         #endregion
 
+        #region Çalışan İşlemleri
+        public ActionResult CalisanOlustur()
+        {
+            List<Firma> firmalar = db.Firmas.ToList();
+            return View(firmalar);
+        }
+
+        [HttpPost]
+        public JavaScriptResult CalisanOlustur(Calisan gelen)
+        {
+            try
+            {
+                
+                gelen.EklenmeTarihi = DateTime.Now;
+                db.Calisans.Add(gelen);
+                db.SaveChanges();
+                Firma firma = db.Firmas.Find(db.IsyeriBolumus.Find(gelen.IsyeriBolumID).FirmaID);
+                return onayYonlendir("Personel başarıyla kaydedildi.", "/Yonetim/FirmaDetay/" + firma.Id);
+            }
+            catch
+            {
+            }
+            return hata("Personel kaydolmadı. Tüm alanları doldurduğunuzdan emin olup tekrar deneyin");
+        }
+        [HttpPost]
+        public String BolumGetir(int? id)
+        {
+            try
+            {
+                Firma firma = db.Firmas.Find(id);
+                StringBuilder sb = new StringBuilder();
+                foreach (var item in firma.IsyeriBolumus.ToList())
+                {
+                    sb.Append("<option value=\"" + item.Id + "\">" + item.Adi + "</option>");
+                }
+                return sb.ToString();
+            }
+            catch { }
+            return "";
+        }
+        [HttpPost]
+        public String FirmaBolumEkleVeGetir(int? firmaid, string bolumadi)
+        {
+            try
+            {
+                Firma firma = db.Firmas.Find(firmaid);
+
+                IsyeriBolumu bolum = new IsyeriBolumu()
+                {
+                    FirmaID = firma.Id,
+                    Adi = bolumadi
+                };
+                db.IsyeriBolumus.Add(bolum);
+                db.SaveChanges();
+                return BolumGetir(firma.Id);
+            }
+            catch { }
+            return "";
+        }
+
+        #endregion
+
+
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

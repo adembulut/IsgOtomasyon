@@ -1,8 +1,8 @@
 ﻿@using DKXISG.Models
 @model IEnumerable<Firma>
 @{
-    ViewBag.Title = "CalisanOlustur";
-    Layout = "~/Views/Shared/_LayoutUzman.cshtml";
+    ViewBag.Title = "Calisan Olustur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section header{
@@ -334,7 +334,7 @@
 
         function bolumdoldur(id) {
             $.ajax({
-                url: '/Uzman/BolumGetir',
+                url: '/Yonetim/BolumGetir',
                 type: 'POST',
                 data: { id: id },
                 success: function (result) {
@@ -354,7 +354,7 @@
                 var isyeriid = $('#IsyeriBolumID');
                 var firmaid = $('#FirmaID').val();
                 $.ajax({
-                    url: '/Uzman/FirmaBolumEkleVeGetir',
+                    url: '/Yonetim/FirmaBolumEkleVeGetir',
                     type: 'POST',
                     data: { firmaid: firmaid, bolumadi: bolumadi },
                     success: function (result) {
@@ -374,7 +374,7 @@
             $('#FirmaID').select2();
             $('#btnCalisanKaydet').click(function () {
                 $.ajax({
-                    url: '/Uzman/CalisanOlustur',
+                    url: '/Yonetim/CalisanOlustur',
                     type: 'POST',
                     data: $('#submit_form').serialize(),
                     datatype: 'script'
