@@ -91,10 +91,6 @@ namespace DKXISG.Controllers
         }
 
         */
-
-
-
-
         public ActionResult Firmalar()
         {
             List<FirmaUzman> fu = db.FirmaUzmen.Where(x => x.UzmanID == benuzman.Id).ToList();
@@ -174,8 +170,84 @@ namespace DKXISG.Controllers
             return hata("Yapılacak kaydedilemedi. Lütfen tüm alanarı doldurduğunuzdan emin olup tekrar deneyin");
         }
 
+        public ActionResult Egitimler()
+        {
+            List<Egitim> egitimler = db.Egitims.Where(x => x.EgitimEkleyen == benuzman.KullaniciAdi || x.EgitimYapan == benuzman.KullaniciAdi).ToList();
+            ViewBag.firmauzman = db.FirmaUzmen.Where(x=>x.UzmanID == benuzman.Id).ToList();
+            return View(egitimler);
+        }
 
+        [HttpPost]
+        public JavaScriptResult EgitimEkle(Egitim egitim)
+        {
+            try
+            {
+                egitim.EgitimEkleyen = benuzman.KullaniciAdi;
+                egitim.EkleyenAdiSoyadi = benuzman.AdiSoyadi;
+                egitim.EgitimYapan = benuzman.KullaniciAdi;
+                egitim.EklenmeTarihi = DateTime.Now;
+                if (egitim.EgitimTarihi < DateTime.Now) return hata("Eğitim tarihi ileri bir tarih olmalıdır. Geçmişe dönük eğitim girilemez");
+                db.Egitims.Add(egitim);
+                db.SaveChanges();
+                return onayyenile("Eğitim başarıyla kaydedildi");
+            }
+            catch { }
+            return hata("Eğitim eklenirken bir haya meydana geldi. Lütfen tüm bilgilerin girildiğinden emin olup tekrar deneyin");
+        }
+        [HttpPost]
+        public JavaScriptResult EgitimYapildiKaydet(int? id)
+        {
+            try
+            {
+                Egitim egitim = db.Egitims.Find(id);
+                if (egitim.EgitimYapan == benuzman.KullaniciAdi)
+                {
+                    egitim.isYapildi = true;
+                    db.SaveChanges();
+                    return onayyenile("Eğitiminiz için teşşekkür ederiz.");
+                }
+                else
+                {
+                    return hata("Bu eğitim size ait görünmüyor");
+                }
+            }
+            catch { }
+            return hata("İşlem yapılırken bir hata meydana geldi");
+        }
 
+        [HttpPost]
+        public ActionResult ajaxEgitimGetir(int?id)
+        {
+            try
+            {
+                Egitim egitim = db.Egitims.Find(id);
+                if (egitim.EgitimYapan == benuzman.KullaniciAdi)
+                {
+                     //$('#EgitimFirmaAdi').val(result.firmaadi);
+                     //   $('#EgitimAdi').val(result.adi);
+                     //   $('#EgitimLokasyonu').val(result.lokasyonu);
+                     //   $('#EgitimEgitimTarihi').val(result.egitimtarihi);
+                     //   $('#EgitimEklenmeTarihi').val(result.eklenmetarihi);
+                     //   $('#EgitimEkleyenKisi').val(result.ekleyenkisi);
+                    return Json(new
+                    {
+                        sonuc = 1,
+                        firmaadi = egitim.Firma.Adi.ToUpper(),
+                        adi = egitim.Adi.ToUpper(),
+                        lokasyonu = egitim.Lokasyonu.ToUpper(),
+                        egitimtarihi = egitim.EgitimTarihi.ToShortDateString(),
+                        eklenmetarihi = egitim.EklenmeTarihi.ToShortDateString(),
+                        ekleyenkisi = egitim.EkleyenAdiSoyadi.ToUpper()
+                    });
+                }
+                else
+                {
+                    return Json(new { sonuc = 0, mesaj = "Bu eğitim size ait görünmüyor" });
+                }
+            }
+            catch { }
+            return Json(new { sonuc = 0, mesaj = "Eğitim detayları getirilirken bir hata meydana geldi" });
+        }
 
         public ActionResult YeniSahaDenetimi()
         {

@@ -2528,6 +2528,7 @@
     <Content Include="Views\Doktor\Asilar.cshtml" />
     <Content Include="Views\Doktor\AsiDetay.cshtml" />
     <Content Include="Views\Yonetim\CalisanOlustur.cshtml" />
+    <Content Include="Views\Uzman\Egitimler.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
