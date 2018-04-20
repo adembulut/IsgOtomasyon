@@ -7,11 +7,12 @@
 }
 @section header{
     <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="~/Content/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+
     <link href="~/Content/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <link href="~/Content/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
 }
 <h1 class="page-title">
     Saha Denetimi İçeriği
@@ -148,20 +149,15 @@
 </div>
 
 @section footer{
-    <script src="~/Content/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+   <script src="~/Content/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
-
 
     <script>
         $(document).ready(function () {
             $('#Itemler').select2();
             $('#TerminTarihi').datepicker({});
-
-
-
-
             $('#btnSahaDenetimiItemKaydet').click(function () {
                 $.ajax({
                     type: "POST",
@@ -170,9 +166,6 @@
                     dataType: "script"
                 });
             });
-
-
-
             $('#Itemler').change(function () {
                 var id = $('#Itemler').val();
                 $.ajax({
@@ -191,11 +184,6 @@
                     }
                 })
             });
-
-
-
         });
-
-
     </script>
 }

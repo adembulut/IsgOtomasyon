@@ -7,6 +7,7 @@ namespace DKXISG.Models
     {
         public Firma()
         {
+            this.CalismaPlanis = new List<CalismaPlani>();
             this.DoktorZiyarets = new List<DoktorZiyaret>();
             this.Egitims = new List<Egitim>();
             this.FirmaDoktors = new List<FirmaDoktor>();
@@ -34,6 +35,7 @@ namespace DKXISG.Models
         public bool TamamlandiMi { get; set; }
         public int SektorId { get; set; }
         public string ResimYolu { get; set; }
+        public virtual ICollection<CalismaPlani> CalismaPlanis { get; set; }
         public virtual ICollection<DoktorZiyaret> DoktorZiyarets { get; set; }
         public virtual ICollection<Egitim> Egitims { get; set; }
         public virtual Ilce Ilce { get; set; }

@@ -20,77 +20,6 @@ namespace DKXISG.Controllers
             return View();
         }
 
-
-
-        /*
-
-        public ActionResult CalisanOlustur()
-        {
-            List<Firma> firmalar = new List<Firma>();
-            List<FirmaUzman> fu = db.FirmaUzmen.Where(x => x.UzmanID == benuzman.Id).ToList();
-            foreach (var item in fu)
-            {
-                firmalar.Add(item.Firma);
-            }
-            return View(firmalar);
-        }
-
-        [HttpPost]
-        public JavaScriptResult CalisanOlustur(Calisan gelen)
-        {
-            try
-            {
-                IsyeriBolumu bolum = db.IsyeriBolumus.Find(gelen.IsyeriBolumID);
-                Firma firma = db.Firmas.Find(bolum.FirmaID);
-                FirmaUzman fu = db.FirmaUzmen.FirstOrDefault(x => x.UzmanID == benuzman.Id && x.FirmaID == firma.Id);
-                if (fu == null) return hata("Sizin bu firmada yetkiniz bulunmuyor");
-                gelen.EklenmeTarihi = DateTime.Now;
-                db.Calisans.Add(gelen);
-                db.SaveChanges();
-                return onayYonlendir("Personel başarıyla kaydedildi.", "/Uzman/FirmaDetay/" + firma.Id);
-            }
-            catch
-            {
-            }
-            return hata("Personel kaydolmadı. Tüm alanları doldurduğunuzdan emin olup tekrar deneyin");
-        }
-        [HttpPost]
-        public String BolumGetir(int? id)
-        {
-            try
-            {
-                Firma firma = db.Firmas.Find(id);
-                StringBuilder sb = new StringBuilder();
-                foreach (var item in firma.IsyeriBolumus.ToList())
-                {
-                    sb.Append("<option value=\"" + item.Id + "\">" + item.Adi + "</option>");
-                }
-                return sb.ToString();
-            }
-            catch { }
-            return "";
-        }
-        [HttpPost]
-        public String FirmaBolumEkleVeGetir(int? firmaid, string bolumadi)
-        {
-            try
-            {
-                Firma firma = db.Firmas.Find(firmaid);
-
-                IsyeriBolumu bolum = new IsyeriBolumu()
-                {
-                    FirmaID = firma.Id,
-                    Adi = bolumadi
-                };
-                db.IsyeriBolumus.Add(bolum);
-                db.SaveChanges();
-                return BolumGetir(firma.Id);
-            }
-            catch { }
-            return "";
-        }
-
-        */
         public ActionResult Firmalar()
         {
             List<FirmaUzman> fu = db.FirmaUzmen.Where(x => x.UzmanID == benuzman.Id).ToList();
@@ -103,11 +32,14 @@ namespace DKXISG.Controllers
         }
         public ActionResult FirmaDetay(int? id)
         {
-            ViewBag.yapilacaklar = db.FirmaYapilacaks.Where(x => x.FirmaID == id && x.UzmanID == benuzman.Id).ToList();
-
             try
             {
                 Firma firma = db.Firmas.Find(id);
+
+                ViewBag.yapilacaklar = db.FirmaYapilacaks.Where(x => x.FirmaID == id && x.UzmanID == benuzman.Id).ToList();
+                ViewBag.ben = benuzman;
+
+
                 FirmaUzman fu = db.FirmaUzmen.FirstOrDefault(x => x.UzmanID == benuzman.Id && x.FirmaID == firma.Id);
                 if (fu != null)
                 {
@@ -173,7 +105,7 @@ namespace DKXISG.Controllers
         public ActionResult Egitimler()
         {
             List<Egitim> egitimler = db.Egitims.Where(x => x.EgitimEkleyen == benuzman.KullaniciAdi || x.EgitimYapan == benuzman.KullaniciAdi).ToList();
-            ViewBag.firmauzman = db.FirmaUzmen.Where(x=>x.UzmanID == benuzman.Id).ToList();
+            ViewBag.firmauzman = db.FirmaUzmen.Where(x => x.UzmanID == benuzman.Id).ToList();
             return View(egitimler);
         }
 
@@ -216,19 +148,13 @@ namespace DKXISG.Controllers
         }
 
         [HttpPost]
-        public ActionResult ajaxEgitimGetir(int?id)
+        public ActionResult ajaxEgitimGetir(int? id)
         {
             try
             {
                 Egitim egitim = db.Egitims.Find(id);
                 if (egitim.EgitimYapan == benuzman.KullaniciAdi)
                 {
-                     //$('#EgitimFirmaAdi').val(result.firmaadi);
-                     //   $('#EgitimAdi').val(result.adi);
-                     //   $('#EgitimLokasyonu').val(result.lokasyonu);
-                     //   $('#EgitimEgitimTarihi').val(result.egitimtarihi);
-                     //   $('#EgitimEklenmeTarihi').val(result.eklenmetarihi);
-                     //   $('#EgitimEkleyenKisi').val(result.ekleyenkisi);
                     return Json(new
                     {
                         sonuc = 1,
@@ -329,16 +255,19 @@ namespace DKXISG.Controllers
                         {
                             OlayYeriFoto oyf = new OlayYeriFoto()
                             {
-                                ItemID=item.Id,
-                                EklenmeTarihi=DateTime.Now,
+                                ItemID = item.Id,
+                                EklenmeTarihi = DateTime.Now,
                                 ResimYolu = dosyayolu
                             };
                             db.OlayYeriFotoes.Add(oyf);
                             db.SaveChanges();
-                            return Json(new {
-                                ResimYolu=Url.Content(dosyayolu),
-                                ResimId=oyf.Id,
-                                Message = "Resim başarıyla kaydedildi", JsonRequestBehavior.AllowGet }); 
+                            return Json(new
+                            {
+                                ResimYolu = Url.Content(dosyayolu),
+                                ResimId = oyf.Id,
+                                Message = "Resim başarıyla kaydedildi",
+                                JsonRequestBehavior.AllowGet
+                            });
                         }
                         else
                         {
@@ -367,7 +296,7 @@ namespace DKXISG.Controllers
                 return Json(new { Message = "Item bulunamadı.", JsonRequestBehavior.AllowGet });
 
             }
-           
+
         }
         [HttpPost]
         public JavaScriptResult ItemResimSil(int? id)
@@ -379,7 +308,7 @@ namespace DKXISG.Controllers
                 {
                     string resimyeri = foto.ResimYolu;
                     db.OlayYeriFotoes.Remove(foto);
-                   
+
                     db.SaveChanges();
                     if (System.IO.File.Exists(Server.MapPath(resimyeri)))
                     {
@@ -448,11 +377,23 @@ namespace DKXISG.Controllers
         }
 
 
-        public ActionResult SahaDenetimleri()
+        public ActionResult SahaDenetimleri(int? id)
         {
+            try
+            {
+                if (id > 0)
+                {
+                    Firma firma = db.Firmas.Find(id);
+                    return View(firma.SahaDenetims.Where(x=>x.UzmanID == benuzman.Id).ToList());
+                }
+
+            }
+            catch { }
             var result = db.SahaDenetims.Where(x => x.UzmanID == benuzman.Id).ToList();
             return View(result);
         }
+
+
         public ActionResult SahaDenetimiIcerigi(int? id)
         {
             try
@@ -564,6 +505,176 @@ namespace DKXISG.Controllers
         }
 
 
+        public ActionResult CalismaPlanlari(int?id)
+        {
+            try
+            {
+                if (id > 0)
+                {
+                    Firma firma = db.Firmas.Find(id);
+                    return View(firma.CalismaPlanis.Where(x => x.SorumluKisi == benuzman.KullaniciAdi).ToList());
+                }
+            }
+            catch { }
+            var result = db.CalismaPlanis.Where(x => x.SorumluKisi == benuzman.KullaniciAdi).ToList();
+            return View(result);
+        }
+
+        [HttpPost]
+        public JsonResult SiradakiCalismaTarihi(int? id)//Çalışma planları sayfasındaki sıradaki tarih kolonu için
+        {
+            try
+            {
+                DateTime tarih;
+                CalismaPlani cp = db.CalismaPlanis.Find(id);
+                if (cp == null) return Json(new { sonuc = 0, yazi = "Plan Bulunamadı" });
+                Calisma soncalisma = cp.Calismas.ToList().Where(x => x.CalismayiYapanKisi == benuzman.KullaniciAdi).OrderByDescending(x => x.Tarih).Take(1).FirstOrDefault();
+                int toplamgun = 0;
+                DateTime ilktarih;
+                if (soncalisma != null)
+                {
+                    ilktarih = soncalisma.Tarih.Value;
+                }
+                else
+                {
+                    ilktarih = cp.EklenmeTarihi;
+                }
+
+                int gun = 0;
+                switch (cp.PeriyotTipi)
+                {
+                    case "Yıl": gun = 365; break;
+                    case "Ay": gun = 30; break;
+                    case "Hafta": gun = 7; break;
+                    case "Gün": gun = 1; break;
+                }
+                toplamgun = gun * cp.PeriyotAraligi;
+                tarih = ilktarih.AddDays(toplamgun);
+                return Json(new { sonuc = 1, yazi = tarih.ToString() });
+            }
+            catch { }
+            return Json(new { sonuc = 1, yazi = "Tanımsız" });
+        }
+
+        [HttpGet]
+        public string selectFirmalariGetir()
+        {
+            List<FirmaUzman> fu = benuzman.FirmaUzmen.ToList();
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<option disabled selected>Firma Seçin</option>");
+            foreach (var item in fu)
+            {
+                sb.Append("<option value=\"" + item.FirmaID + "\">" + item.Firma.Adi.ToUpper() + "</option>");
+            }
+            return sb.ToString();
+        }
+
+        [HttpPost]
+        public ActionResult YeniFaliyetPlani(CalismaPlani cp)
+        {
+            try
+            {
+                if (cp.PeriyotAraligi < 1) return hata("Periyot aralığı 0 dan büyük olmalıdır");
+                cp.EklenmeTarihi = DateTime.Now;
+                cp.EkleyenKisi = benuzman.KullaniciAdi;
+                cp.EkleyenAdi = benuzman.AdiSoyadi;
+                cp.SorumluKisi = benuzman.KullaniciAdi;
+                db.CalismaPlanis.Add(cp);
+                db.SaveChanges();
+                return onayyenile("Çalışma planı başarıyla kaydedildi");
+            }
+            catch { }
+            return hata("Plan kaydedilirken bir hata oluştu. Gerekli alanları doldurup tekrar deneyin lütfen");
+        }
+
+        public ActionResult FaaliyetPlaniDetay(int? id)
+        {
+            try
+            {
+                CalismaPlani cp = db.CalismaPlanis.Find(id);
+                if (cp.SorumluKisi != benuzman.KullaniciAdi) return RedirectToAction("CalismaPlanlari");
+                return View(cp);
+            }
+            catch { }
+            return RedirectToAction("CalismaPlanlari");
+        }
+
+        [HttpPost]
+        public int CalismaEklenebilirMi(int? id)
+        {
+            try
+            {
+                CalismaPlani cp = db.CalismaPlanis.Find(id);
+                if (cp.SorumluKisi != benuzman.KullaniciAdi) return -1;
+                Calisma soncalisma = cp.Calismas.OrderByDescending(x => x.Tarih).Take(1).FirstOrDefault();
+
+                int toplamgun = 0;
+                DateTime ilktarih;
+                DateTime gecerliTarih;
+                if (soncalisma != null)
+                {
+                    ilktarih = soncalisma.Tarih.Value;
+                }
+                else
+                {
+                    ilktarih = cp.EklenmeTarihi;
+                    return 1;
+                }
+
+                int gun = 0;
+                switch (cp.PeriyotTipi)
+                {
+                    case "Yıl": gun = 365; break;
+                    case "Ay": gun = 30; break;
+                    case "Hafta": gun = 7; break;
+                    case "Gün": gun = 1; break;
+                }
+                toplamgun = gun * cp.PeriyotAraligi;
+                gecerliTarih = ilktarih.AddDays(toplamgun);
+                if ((gecerliTarih.ToShortDateString() == DateTime.Now.ToShortDateString()) ||
+                    gecerliTarih.AddDays(1).ToShortDateString() == DateTime.Now.ToShortDateString() ||
+                    gecerliTarih.AddDays(-1).ToShortDateString() == DateTime.Now.ToShortDateString())
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
+
+            }
+            catch { }
+            return 0;
+        }
+
+        [HttpPost]
+        public JavaScriptResult YeniCalismaKaydet(Calisma calisma)
+        {
+            try
+            {
+                CalismaPlani cp = db.CalismaPlanis.Find(calisma.CalismaPlaniID);
+                int durum = CalismaEklenebilirMi(cp.Id);
+                if (durum == 1)
+                {
+                    calisma.Tarih = DateTime.Now;
+                    calisma.CalismayiYapanKisi = benuzman.KullaniciAdi;
+                    calisma.CalismayiYapanAdiSoyadi = benuzman.AdiSoyadi;
+                    db.Calismas.Add(calisma);
+                    db.SaveChanges();
+                    return onayyenile("Çalışmanız başarıyla tamamlandı");
+                }
+                else if (durum == -1)
+                {
+                    return hata("Yetkiniz yok");
+                }
+                else if (durum == 2)
+                {
+                    return hata("Son çalışmadan sonra periyota göre tarih henüz gelmemiş");
+                }
+            }
+            catch { }
+            return hata("Çalışma kaydedilemedi");
+        }
 
 
 

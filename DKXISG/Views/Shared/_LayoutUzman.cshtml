@@ -1,17 +1,4 @@
 ﻿<!DOCTYPE html>
-<!--
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.7
-Version: 4.7.1
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-Renew Support: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
@@ -48,36 +35,22 @@ License: You must have a valid license purchased only from themeforest(the above
                         <span></span>
                     </div>
                 </div>
-                <!-- END LOGO -->
-                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
                 <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
                     <span></span>
                 </a>
-                <!-- END RESPONSIVE MENU TOGGLER -->
-                <!-- BEGIN TOP NAVIGATION MENU -->
                 @{Html.RenderAction("_TopBar", "Yonetim");}
-                <!-- END TOP NAVIGATION MENU -->
             </div>
-            <!-- END HEADER INNER -->
         </div>
-        <!-- END HEADER -->
-        <!-- BEGIN HEADER & CONTENT DIVIDER -->
         <div class="clearfix"> </div>
-        <!-- END HEADER & CONTENT DIVIDER -->
-        <!-- BEGIN CONTAINER -->
         <div class="page-container">
-            <!-- BEGIN SIDEBAR -->
             <div class="page-sidebar-wrapper">
                 <div class="page-sidebar navbar-collapse collapse">
                     <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
-                        <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
-                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                         <li class="sidebar-toggler-wrapper hide">
                             <div class="sidebar-toggler">
                                 <span></span>
                             </div>
                         </li>
-                        <!-- END SIDEBAR TOGGLER BUTTON -->
                         <li class="nav-item start ">
                             <a href="@Url.Content("/Uzman/Index")" class="nav-link ">
                                 <i class="icon-graph"></i>
@@ -87,13 +60,6 @@ License: You must have a valid license purchased only from themeforest(the above
                         <li class="heading">
                             <h3 class="uppercase">Yönetim</h3>
                         </li>
-                        <!--<li class="nav-item  ">
-                            <a href="@Url.Content("/Uzman/CalisanOlustur")" class="nav-link ">
-                                <span class="title">Çalışan Ekle</span>
-                            </a>
-                        </li> -->
-                        
-
                         <li class="nav-item  ">
                             <a href="@Url.Content("/Uzman/Firmalar")" class="nav-link ">
                                 <span class="title">Firmalar</span>
@@ -112,6 +78,11 @@ License: You must have a valid license purchased only from themeforest(the above
                         <li class="nav-item  ">
                             <a href="@Url.Content("/Uzman/Egitimler")" class="nav-link ">
                                 <span class="title">Eğitimler</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Content("/Uzman/CalismaPlanlari")" class="nav-link ">
+                                <span class="title">Çalışma Planları</span>
                             </a>
                         </li>
                     </ul>

@@ -93,36 +93,39 @@
 
 
                                 <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle btn-xs" type="button" data-toggle="dropdown" aria-expanded="false">
-                                            İşlemler
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu pull-left" role="menu">
-                                            @if (item.EgitimTarihi.ToShortDateString() == DateTime.Now.ToShortDateString() ||
+                                    @if (item.isYapildi == false)
+                                    {
+                                        <div class="btn-group">
+                                            <button class="btn btn-xs green dropdown-toggle btn-xs" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                İşlemler
+                                                <i class="fa fa-angle-down"></i>
+                                            </button>
+                                            <ul class="dropdown-menu pull-left" role="menu">
+                                                @if (item.EgitimTarihi.ToShortDateString() == DateTime.Now.ToShortDateString() ||
                                                 item.EgitimTarihi.AddDays(1).ToShortDateString() == DateTime.Now.ToShortDateString())
-                                            {
-                                                <li>
-                                                    <a href="javascript:;" class="btnYapildiKaydet" data-id="@item.Id">
-                                                        <i class="icon-check"></i> Yapıldı
-                                                    </a>
-                                                </li>
-                                            }
+                                                {
+                                                    <li>
+                                                        <a href="javascript:;" class="btnYapildiKaydet" data-id="@item.Id">
+                                                            <i class="icon-check"></i> Yapıldı
+                                                        </a>
+                                                    </li>
+                                                }
 
-                                        </ul>
-                                    </div>
+                                            </ul>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <label class="label label-default">Eğitim Bitmiş</label>
+                                    }
+                                    
                                 </td>
                             </tr>
                         }
-
-
-
                     </tbody>
-
                 </table>
             </div>
         </div>
-        <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 </div>
 
