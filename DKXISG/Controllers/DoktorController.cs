@@ -357,6 +357,18 @@ namespace DKXISG.Controllers
         {
             try
             {
+                CalisanAsi calisanasi = db.CalisanAsis.Where(x => x.AsiID == ca.AsiID && x.CalisanID == ca.CalisanID).OrderByDescending(x => x.AsiTarihi).Take(1).FirstOrDefault();
+                if (calisanasi != null)
+                {
+                    var gun = (calisanasi.AsiTarihi.Date.AddDays(calisanasi.Asi.IslemPeriyodu) - DateTime.Now.Date).TotalDays;
+                    if (Convert.ToInt32(gun.ToString()) > 3)
+                    {
+                        return hata("Bu hastanın aşısı zaten yapılmış. Periyodik takvime uymadığı için bugün aşısı yapılamaz. Ortalama " +
+                            gun.ToString() + " gün sonra yapılabilir");
+                    }
+                }
+
+
                 ca.DoktorID = bendoktor.Id;
                 ca.AsiTarihi = DateTime.Now;
                 db.CalisanAsis.Add(ca);
@@ -366,6 +378,9 @@ namespace DKXISG.Controllers
             catch { }
             return hata("Lütfen gerekli alanları doldurup tekrar deneyin");
         }
+
+
+
         [HttpPost]
         public JavaScriptResult AsiSil(int?id)
         {
@@ -380,7 +395,16 @@ namespace DKXISG.Controllers
             return hata("Aşı silinirken bir hata meydana geldi. Bu aşıyı yaptığınız birisi varsa silemezsiniz. Önce o kayıtların silinmesi gerekiyor");
         }
 
-
+        public ActionResult AsiDetay(int?id)
+        {
+            try
+            {
+                Asi asi = db.Asis.Find(id);
+                return View(asi);
+            }
+            catch { }
+            return RedirectToAction("Asilar");
+        }
 
 
 

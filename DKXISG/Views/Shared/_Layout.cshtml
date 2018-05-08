@@ -1,21 +1,8 @@
 ﻿<!DOCTYPE html>
-<!--
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.7
-Version: 4.7.1
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-Renew Support: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
-<html lang="en">
+<html lang="tr">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
@@ -27,18 +14,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <meta content="" name="author" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-    @*<link href="~/Content/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="~/Content/assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="~/Content/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />*@
     @Styles.Render("~/bundles/Genel")
-    <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
     @RenderSection("header", false)
 </head>
@@ -59,46 +35,23 @@ License: You must have a valid license purchased only from themeforest(the above
                         <span></span>
                     </div>
                 </div>
-                <!-- END LOGO -->
-                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
                 <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
                     <span></span>
                 </a>
-                <!-- END RESPONSIVE MENU TOGGLER -->
-                <!-- BEGIN TOP NAVIGATION MENU -->
                 @{Html.RenderAction("_TopBar", "Yonetim");}
-                <!-- END TOP NAVIGATION MENU -->
             </div>
-            <!-- END HEADER INNER -->
         </div>
-        <!-- END HEADER -->
-        <!-- BEGIN HEADER & CONTENT DIVIDER -->
         <div class="clearfix"> </div>
-        <!-- END HEADER & CONTENT DIVIDER -->
-        <!-- BEGIN CONTAINER -->
         <div class="page-container">
-            <!-- BEGIN SIDEBAR -->
             <div class="page-sidebar-wrapper">
-                <!-- BEGIN SIDEBAR -->
-                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-                <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
                 <div class="page-sidebar navbar-collapse collapse">
-                    <!-- BEGIN SIDEBAR MENU -->
-                    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
-                    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
-                    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
-                    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-                    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
-                    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
                     <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
-                        <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
-                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                
                         <li class="sidebar-toggler-wrapper hide">
                             <div class="sidebar-toggler">
                                 <span></span>
                             </div>
                         </li>
-                        <!-- END SIDEBAR TOGGLER BUTTON -->
                         <li class="nav-item start ">
                             <a href="@Url.Content("/Yonetim/Index")" class="nav-link ">
                                 <i class="icon-graph"></i>
@@ -214,7 +167,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <ul class="sub-menu">
                                         
                                         <li class="nav-item">
-                                            <a href="/Uzman/CalisanOlustur" class="nav-link">
+                                            <a href="/Yonetim/CalisanOlustur" class="nav-link">
                                                 <i class="icon-plus"></i> Yeni Çalışan
                                             </a>
                                         </li>
@@ -233,22 +186,12 @@ License: You must have a valid license purchased only from themeforest(the above
 
 
                     </ul>
-                    <!-- END SIDEBAR MENU -->
-                    <!-- END SIDEBAR MENU -->
                 </div>
-                <!-- END SIDEBAR -->
             </div>
-            <!-- END SIDEBAR -->
-            <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
-                <!-- BEGIN CONTENT BODY -->
                 <div class="page-content">
-                    <!-- BEGIN PAGE HEADER-->
-                    <!-- BEGIN PAGE BAR -->
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
-
-
                             <li>
                                 <a href="index.html">
                                     @if (ViewContext.RouteData.Values["controller"].ToString() != "Home")

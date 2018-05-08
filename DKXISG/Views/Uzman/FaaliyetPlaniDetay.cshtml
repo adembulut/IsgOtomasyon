@@ -1,0 +1,171 @@
+﻿@using DKXISG.Models
+@model CalismaPlani
+@{
+    ViewBag.Title = "FaaliyetPlaniDetay";
+    Layout = "~/Views/Shared/_LayoutUzman.cshtml";
+}
+@section header{
+    <link href="~/Content/assets/pages/css/invoice-2.min.css" rel="stylesheet" type="text/css" />
+}
+<h1 class="page-title">
+    @Model.Faliyet
+    <small>Detayları</small>
+</h1>
+
+<div class="invoice-content-2 bordered">
+    <div class="row invoice-head">
+        <div class="col-md-7 col-xs-6">
+            <div class="invoice-logo">
+                @if (!String.IsNullOrEmpty(Model.Firma.ResimYolu))
+                {
+                    <img src="@Url.Content(Model.Firma.ResimYolu)" class="img-responsive img-circle" alt=""
+                         style="max-width:150px;max-height:150px;">
+                }
+                else
+                {
+                    <img src="http://placehold.it/150x150" class="img-responsive img-circle" alt=""
+                         style="max-width:150px;max-height:150px;">
+                }
+
+                <h1 class="uppercase">@Model.Firma.Adi</h1>
+            </div>
+        </div>
+        <div class="col-md-5 col-xs-6">
+            <div class="company-address">
+                <span class="bold uppercase">@Model.Firma.Adi</span>
+                <br> @Model.Firma.Adresi
+                <br> @Model.Firma.Ilce.Il.Adi,@Model.Firma.Ilce.IlceAdi
+                <br>
+                <span class="bold">T</span> @Model.Firma.Telefonu
+                <br>
+                <span class="bold">E</span> @Model.Firma.Mail
+                <br>
+                <span class="bold">W</span> @Model.Firma.Web
+            </div>
+        </div>
+    </div>
+    <div class="row invoice-cust-add">
+        <div class="col-xs-3">
+            <h2 class="invoice-title uppercase">Faaliyet</h2>
+            <p class="invoice-desc">@Model.Faliyet</p>
+        </div>
+        <div class="col-xs-3">
+            <h2 class="invoice-title uppercase">Eklenme Tarihi</h2>
+            <p class="invoice-desc">@Model.EklenmeTarihi.ToString("dd MMMM yyyy")</p>
+        </div>
+        <div class="col-xs-3">
+            <h2 class="invoice-title uppercase">Periyot</h2>
+            <p class="invoice-desc">@Model.PeriyotAraligi @Model.PeriyotTipi</p>
+        </div>
+        <div class="col-xs-3">
+            <h2 class="invoice-title uppercase">Ekleyen</h2>
+            <p class="invoice-desc">@Model.EkleyenAdi.ToUpper()</p>
+        </div>
+    </div>
+    <div class="row invoice-body" id="calismalar">
+        <h1 class="page-title">Yapılan çalışmalar</h1>
+        <a class="btn yellow btn-xs btn-circle hidden-print" id="btnYeniCalisma" data-id="@Model.Id"><span class="fa fa-plus"></span> Yeni Çalışma</a>
+        <div class="col-xs-12 table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="invoice-title uppercase">Durum</th>
+                        <th class="invoice-title uppercase text-center">Tarih</th>
+                        <th class="invoice-title uppercase text-center">Sorumlu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Calismas.ToList().Count == 0)
+                    {
+                        <tr><td>Henüz hiç çalışma yapılmamış</td></tr>
+                    }
+                    @foreach (var item in Model.Calismas.ToList())
+                    {
+                        <tr>
+                            <td class="sbold">
+                                @item.Aciklama
+                            </td>
+                            <td class="text-center sbold">@item.Tarih.Value.ToString("dd MMMM yyyy")</td>
+                            <td class="text-center sbold">@item.CalismayiYapanAdiSoyadi.ToUpper()</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-lg green-haze hidden-print uppercase print-btn" onclick="javascript:window.print();">Yazdır</a>
+        </div>
+    </div>
+</div>
+@{
+    DateTime tarih = DateTime.Now.AddDays(-180);
+    <text>@tarih.ToString()</text>
+}
+<div id="mdlYeniCalisma" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">
+                    Faaliyet Planı için Yeni Çalışma
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form">
+                    <form id="frmYeniCalisma">
+                        <input hidden id="CalismaPlaniID" name="CalismaPlaniID" value="@Model.Id">
+                        <div class="form-group">
+                            <label>Çalışma Sonuç Açıklaması</label>
+                            <textarea class="form-control" rows="4" id="Aciklama" name="Aciklama"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn green" id="btnCalismaKaydet">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section footer{
+    <script>
+        function calismaKaydet() {
+            $('#mdlYeniCalisma').modal("show");
+
+        }
+        $('#btnCalismaKaydet').click(function () {
+            $.ajax({
+                url: '/Uzman/YeniCalismaKaydet',
+                type: 'POST',
+                data: $('#frmYeniCalisma').serialize()
+            });
+        });
+        $("#btnYeniCalisma").click(function (e) {
+            $.ajax({
+                url: '/Uzman/CalismaEklenebilirMi',
+                type: 'POST',
+                dataType: 'text',
+                data: { id: this.dataset.id },
+                success: function (sonuc) {
+                    switch (sonuc) {
+
+                        case "0": swal("Hata", "Bu plana çalışma eklenirken bir hata meydana geldi", "warning"); break;
+                        case "2": swal("Hata", "Son çalışmadan sonra periyota göre tarih henüz gelmemiş", "warning"); break;
+                        case "1":
+                            calismaKaydet();
+                            break;
+                        case "-1":
+                            swal("Hata", "Bu plan size ait görünmüyor", "warning"); break;
+                    }
+                }
+            })
+
+        });
+    </script>
+}

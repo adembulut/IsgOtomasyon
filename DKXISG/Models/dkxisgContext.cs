@@ -19,6 +19,8 @@ namespace DKXISG.Models
         public DbSet<Asi> Asis { get; set; }
         public DbSet<Calisan> Calisans { get; set; }
         public DbSet<CalisanAsi> CalisanAsis { get; set; }
+        public DbSet<Calisma> Calismas { get; set; }
+        public DbSet<CalismaPlani> CalismaPlanis { get; set; }
         public DbSet<Doktor> Doktors { get; set; }
         public DbSet<DoktorNot> DoktorNots { get; set; }
         public DbSet<DoktorZiyaret> DoktorZiyarets { get; set; }
@@ -46,6 +48,8 @@ namespace DKXISG.Models
             modelBuilder.Configurations.Add(new AsiMap());
             modelBuilder.Configurations.Add(new CalisanMap());
             modelBuilder.Configurations.Add(new CalisanAsiMap());
+            modelBuilder.Configurations.Add(new CalismaMap());
+            modelBuilder.Configurations.Add(new CalismaPlaniMap());
             modelBuilder.Configurations.Add(new DoktorMap());
             modelBuilder.Configurations.Add(new DoktorNotMap());
             modelBuilder.Configurations.Add(new DoktorZiyaretMap());

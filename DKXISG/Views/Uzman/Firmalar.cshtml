@@ -33,8 +33,8 @@
                             <th> Firma </th>
                             <th> Müşteri </th>
                             <th> Telefon </th>
-                            <th> Yetki Veren</th>
-                            <th> Yetki Tarihi </th>
+                            <th> Denetimler</th>
+                            <th>F.Planları</th>
                             <th>İşlem</th>
                         </tr>
                     </thead>
@@ -44,8 +44,8 @@
                             <th> Firma </th>
                             <th> Müşteri </th>
                             <th> Telefon </th>
-                            <th> Yetki Veren</th>
-                            <th> Yetki Tarihi </th>
+                            <th> Denetimler</th>
+                            <th>F.Planları</th>
                             <th>İşlem</th>
                         </tr>
                     </tfoot>
@@ -65,11 +65,11 @@
                                             <img class="img-circle" src="http://placehold.it/100x100" width="50" height="50" />
                                         }
                                     </td>
-                                    <td> @item.Adi.ToUpper() </td>
+                                    <td><a href="/Uzman/FirmaDetay/@item.Id"> @item.Adi.ToUpper()</a> </td>
                                     <td> @item.Musteri.AdiSoyadi</td>
                                     <td> @item.Telefonu </td>
-                                    <td> @item.Yonetici.AdiSoyadi </td>
-                                    <td>@item.EklenmeTarihi.ToShortDateString()</td>
+                                    <td><a class="btn purple btn-xs" href="/Uzman/SahaDenetimleri/@item.Id"><span class="fa fa-forward"></span> @item.SahaDenetims.ToList().Count Adet</a> </td>
+                                    <td><a class="btn yellow btn-xs" href="/Uzman/CalismaPlanlari/@item.Id"><span class="fa fa-forward"></span> @item.CalismaPlanis.ToList().Count Adet</a> </td>
                                     <td><a class="btn blue btn-xs" href="/Uzman/FirmaDetay/@item.Id"><span class="fa fa-list"></span> Detay</a></td>
                                 </tr>
                             }

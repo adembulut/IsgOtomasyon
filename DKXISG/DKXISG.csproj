@@ -2425,6 +2425,8 @@
     <Compile Include="Models\Asi.cs" />
     <Compile Include="Models\Calisan.cs" />
     <Compile Include="Models\CalisanAsi.cs" />
+    <Compile Include="Models\Calisma.cs" />
+    <Compile Include="Models\CalismaPlani.cs" />
     <Compile Include="Models\dkxisgContext.cs" />
     <Compile Include="Models\Doktor.cs" />
     <Compile Include="Models\DoktorNot.cs" />
@@ -2441,6 +2443,8 @@
     <Compile Include="Models\Mapping\AsiMap.cs" />
     <Compile Include="Models\Mapping\CalisanAsiMap.cs" />
     <Compile Include="Models\Mapping\CalisanMap.cs" />
+    <Compile Include="Models\Mapping\CalismaMap.cs" />
+    <Compile Include="Models\Mapping\CalismaPlaniMap.cs" />
     <Compile Include="Models\Mapping\DoktorMap.cs" />
     <Compile Include="Models\Mapping\DoktorNotMap.cs" />
     <Compile Include="Models\Mapping\DoktorZiyaretMap.cs" />
@@ -2512,7 +2516,6 @@
     <Content Include="Views\Doktor\Raporlarim.cshtml" />
     <Content Include="Views\Doktor\RaporDetay.cshtml" />
     <Content Include="Views\Shared\_LayoutUzman.cshtml" />
-    <Content Include="Views\Uzman\CalisanOlustur.cshtml" />
     <Content Include="Views\Uzman\Index.cshtml" />
     <Content Include="Views\Uzman\Firmalar.cshtml" />
     <Content Include="Views\Uzman\FirmaDetay.cshtml" />
@@ -2527,6 +2530,11 @@
     <Content Include="Views\Shared\_RaporLayout.cshtml" />
     <Content Include="Views\Uzman\SahaDenetimiRaporla.cshtml" />
     <Content Include="Views\Doktor\Asilar.cshtml" />
+    <Content Include="Views\Doktor\AsiDetay.cshtml" />
+    <Content Include="Views\Yonetim\CalisanOlustur.cshtml" />
+    <Content Include="Views\Uzman\Egitimler.cshtml" />
+    <Content Include="Views\Uzman\CalismaPlanlari.cshtml" />
+    <Content Include="Views\Uzman\FaaliyetPlaniDetay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

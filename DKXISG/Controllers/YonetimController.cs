@@ -155,12 +155,12 @@ namespace DKXISG.Controllers
                 if (yonetici == null) return hata("Bir hata oluştu");
                 Yonetici eski = db.Yoneticis.Find(yonetici.Id);
                 if (eski == null) return hata("Bir hata oluştu");
-                if (String.IsNullOrEmpty(yonetici.KullaniciAdi) || String.IsNullOrEmpty(yonetici.AdiSoyadi)) return hata("Lütfen tüm gerekli alanları doldurun");
-                if (eski.KullaniciAdi != yonetici.KullaniciAdi)
-                {
-                    if (db.Yoneticis.FirstOrDefault(X => X.KullaniciAdi == yonetici.KullaniciAdi) != null) return hata("Bu kullanıcı adı zaten kayıtlı");
-                }
-                eski.KullaniciAdi = yonetici.KullaniciAdi;
+                //if (String.IsNullOrEmpty(yonetici.KullaniciAdi) || String.IsNullOrEmpty(yonetici.AdiSoyadi)) return hata("Lütfen tüm gerekli alanları doldurun");
+                //if (eski.KullaniciAdi != yonetici.KullaniciAdi)
+                //{
+                //    if (db.Yoneticis.FirstOrDefault(X => X.KullaniciAdi == yonetici.KullaniciAdi) != null) return hata("Bu kullanıcı adı zaten kayıtlı");
+                //}
+                //eski.KullaniciAdi = yonetici.KullaniciAdi; Kullanıcı adı değiştirilmemeli
                 eski.AdiSoyadi = yonetici.AdiSoyadi;
                 eski.Telefon = yonetici.Telefon;
                 eski.Mail = yonetici.Mail;
@@ -225,14 +225,14 @@ namespace DKXISG.Controllers
                 if (doktor == null) return hata("Doktor kaydedilirken bir hata oluştu");
                 Doktor eski = db.Doktors.Find(doktor.Id);
                 if (eski == null) return hata("Doktor kaydedilirken bir hata oluştu");
-                if (String.IsNullOrEmpty(doktor.KullaniciAdi) || String.IsNullOrEmpty(doktor.AdiSoyadi)) return hata("Lütfen gerekli alanları eksiksiz doldurun");
-                if (eski.KullaniciAdi != doktor.KullaniciAdi)
-                {
-                    if (db.Doktors.FirstOrDefault(x => x.KullaniciAdi == doktor.KullaniciAdi) != null) return hata("Bu kullanıcı adı zaten bir doktorda kayıtlı. Lütfen farklı bir kullanıcı adı belirleyin");
+                //if (String.IsNullOrEmpty(doktor.KullaniciAdi) || String.IsNullOrEmpty(doktor.AdiSoyadi)) return hata("Lütfen gerekli alanları eksiksiz doldurun");
+                //if (eski.KullaniciAdi != doktor.KullaniciAdi)
+                //{
+                //    if (db.Doktors.FirstOrDefault(x => x.KullaniciAdi == doktor.KullaniciAdi) != null) return hata("Bu kullanıcı adı zaten bir doktorda kayıtlı. Lütfen farklı bir kullanıcı adı belirleyin");
 
-                }
+                //}
                 eski.AdiSoyadi = doktor.AdiSoyadi;
-                eski.KullaniciAdi = doktor.KullaniciAdi;
+                ///eski.KullaniciAdi = doktor.KullaniciAdi; Kullanıcı adı değiştirilmemeli
                 eski.Adres = doktor.Adres;
                 eski.Mail = doktor.Mail;
                 eski.DiplomaNo = doktor.DiplomaNo;
@@ -394,14 +394,14 @@ namespace DKXISG.Controllers
                 if (musteri == null) return hata("Müşteri bilgileri güncellenirken bir hata oluştu");
                 Musteri eski = db.Musteris.Find(musteri.Id);
                 if (eski == null) return hata("Müşteri bilgileri güncellenirken  bir hata oluştu");
-                if (String.IsNullOrEmpty(musteri.KullaniciAdi) || String.IsNullOrEmpty(musteri.AdiSoyadi)) return hata("Lütfen gerekli alanları eksiksiz doldurun");
-                if (eski.KullaniciAdi != musteri.KullaniciAdi)
-                {
-                    if (db.Musteris.FirstOrDefault(x => x.KullaniciAdi == musteri.KullaniciAdi) != null) return hata("Bu kullanıcı adı zaten bir doktorda kayıtlı. Lütfen farklı bir kullanıcı adı bvelirleyin");
+                //if (String.IsNullOrEmpty(musteri.KullaniciAdi) || String.IsNullOrEmpty(musteri.AdiSoyadi)) return hata("Lütfen gerekli alanları eksiksiz doldurun");
+                //if (eski.KullaniciAdi != musteri.KullaniciAdi)
+                //{
+                //    if (db.Musteris.FirstOrDefault(x => x.KullaniciAdi == musteri.KullaniciAdi) != null) return hata("Bu kullanıcı adı zaten bir doktorda kayıtlı. Lütfen farklı bir kullanıcı adı bvelirleyin");
 
-                }
+                //}
                 eski.AdiSoyadi = musteri.AdiSoyadi;
-                eski.KullaniciAdi = musteri.KullaniciAdi;
+                //eski.KullaniciAdi = musteri.KullaniciAdi; Kullanıcı adı değişmemeli
                 eski.Adres = musteri.Adres;
                 eski.Mail = musteri.Mail;
                 eski.Telefon = musteri.Telefon;
@@ -503,14 +503,14 @@ namespace DKXISG.Controllers
                 if (uzman == null) return hata("uzman kaydedilirken bir hata oluştu");
                 Uzman eski = db.Uzmen.Find(uzman.Id);
                 if (eski == null) return hata("uzman kaydedilirken bir hata oluştu");
-                if (String.IsNullOrEmpty(uzman.KullaniciAdi) || String.IsNullOrEmpty(uzman.AdiSoyadi)) return hata("Lütfen gerekli alanları eksiksiz doldurun");
-                if (eski.KullaniciAdi != uzman.KullaniciAdi)
-                {
-                    if (db.Uzmen.FirstOrDefault(x => x.KullaniciAdi == uzman.KullaniciAdi) != null) return hata("Bu kullanıcı adı zaten bir uzmanda kayıtlı. Lütfen farklı bir kullanıcı adı bvelirleyin");
+                //if (String.IsNullOrEmpty(uzman.KullaniciAdi) || String.IsNullOrEmpty(uzman.AdiSoyadi)) return hata("Lütfen gerekli alanları eksiksiz doldurun");
+                //if (eski.KullaniciAdi != uzman.KullaniciAdi)
+                //{
+                //    if (db.Uzmen.FirstOrDefault(x => x.KullaniciAdi == uzman.KullaniciAdi) != null) return hata("Bu kullanıcı adı zaten bir uzmanda kayıtlı. Lütfen farklı bir kullanıcı adı bvelirleyin");
 
-                }
+                //}
                 eski.AdiSoyadi = uzman.AdiSoyadi;
-                eski.KullaniciAdi = uzman.KullaniciAdi;
+                //eski.KullaniciAdi = uzman.KullaniciAdi; Kullanıcı adı değiştirilmemeli
                 eski.Adres = uzman.Adres;
                 eski.Mail = uzman.Mail;
                 eski.Telefon = uzman.Telefon;
@@ -1048,6 +1048,69 @@ namespace DKXISG.Controllers
             return JavaScript("location.href ='" + adres + "';");
         }
         #endregion
+
+        #region Çalışan İşlemleri
+        public ActionResult CalisanOlustur()
+        {
+            List<Firma> firmalar = db.Firmas.ToList();
+            return View(firmalar);
+        }
+
+        [HttpPost]
+        public JavaScriptResult CalisanOlustur(Calisan gelen)
+        {
+            try
+            {
+                
+                gelen.EklenmeTarihi = DateTime.Now;
+                db.Calisans.Add(gelen);
+                db.SaveChanges();
+                Firma firma = db.Firmas.Find(db.IsyeriBolumus.Find(gelen.IsyeriBolumID).FirmaID);
+                return onayYonlendir("Personel başarıyla kaydedildi.", "/Yonetim/FirmaDetay/" + firma.Id);
+            }
+            catch
+            {
+            }
+            return hata("Personel kaydolmadı. Tüm alanları doldurduğunuzdan emin olup tekrar deneyin");
+        }
+        [HttpPost]
+        public String BolumGetir(int? id)
+        {
+            try
+            {
+                Firma firma = db.Firmas.Find(id);
+                StringBuilder sb = new StringBuilder();
+                foreach (var item in firma.IsyeriBolumus.ToList())
+                {
+                    sb.Append("<option value=\"" + item.Id + "\">" + item.Adi + "</option>");
+                }
+                return sb.ToString();
+            }
+            catch { }
+            return "";
+        }
+        [HttpPost]
+        public String FirmaBolumEkleVeGetir(int? firmaid, string bolumadi)
+        {
+            try
+            {
+                Firma firma = db.Firmas.Find(firmaid);
+
+                IsyeriBolumu bolum = new IsyeriBolumu()
+                {
+                    FirmaID = firma.Id,
+                    Adi = bolumadi
+                };
+                db.IsyeriBolumus.Add(bolum);
+                db.SaveChanges();
+                return BolumGetir(firma.Id);
+            }
+            catch { }
+            return "";
+        }
+
+        #endregion
+
 
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

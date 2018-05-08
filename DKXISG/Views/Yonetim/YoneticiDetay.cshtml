@@ -24,12 +24,6 @@
         <div class="profile-sidebar">
             <!-- PORTLET MAIN -->
             <div class="portlet light profile-sidebar-portlet ">
-                <!-- SIDEBAR USERPIC -->
-                @*<div class="profile-userpic">
-                        <img src="../assets/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
-                    </div>*@
-                <!-- END SIDEBAR USERPIC -->
-                <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">@Model.AdiSoyadi </div>
                     @if (Model.AktifMi == true)
@@ -118,8 +112,8 @@
                                             <input type="text" class="form-control" name="AdiSoyadi" maxlength="51" required value="@Model.AdiSoyadi" />
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label">*Kullanıcı Adı</label>
-                                            <input type="text" class="form-control" required maxlength="51" name="KullaniciAdi" value="@Model.KullaniciAdi" />
+                                            <label class="control-label">Kullanıcı Adı</label>
+                                            <input type="text" class="form-control" maxlength="51" disabled readonly value="@Model.KullaniciAdi" />
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Telefon Numarası</label>
